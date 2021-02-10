@@ -67,4 +67,9 @@ class BoardTest {
         assertFalse(b1.checkMoveRules(0,0,1,0));
 
     }
+
+    @Test
+    public void checkDestSquare() {
+
+    }
 }

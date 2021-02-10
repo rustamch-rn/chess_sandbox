@@ -23,6 +23,18 @@ public class PieceTest {
     }
 
     @Test
+
+    public void PieceTest() {
+        p = new Queen(true,4,4,bd);
+        bd.setTile(p,4,4);
+        assertTrue(p.moveDiagonally(5,5));
+        assertFalse(p.moveDiagonally(2,7));
+        assertTrue(p.moveDiagonally(4,6));
+        assertFalse(p.moveDiagonally(1,6));
+        assertTrue(p.moveDiagonally(3,5));
+        assertFalse(p.moveDiagonally(4,7));
+    }
+    @Test
     public void RookTest() {
         p = new Rook(true,0,0,bd);
         bd.setTile(p,0,0);
