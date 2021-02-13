@@ -43,33 +43,35 @@ public abstract class Piece {
         this.posY = posY;
     }
 
-    // EFFECTS: Chooses in which direction diagonally should the piece move
+    // EFFECTS: Chooses in which direction diagonally should the piece move, if movement of the piece
+    //          does not describe a straight line returns false
     protected boolean moveDiagonally(int destX, int destY) {
-        if (destX > posX && destY > posY) {
+        if (Math.abs(destX - posX) != Math.abs(destY - posY)) {
+            return false;
+        } else if (destX > posX && destY > posY) {
             return bd.diagonalUpRightMove(pieceColor,posX,posY,destX,destY);
         } else if (destX < posX && destY > posY) {
             return bd.diagonalUpLeftMove(pieceColor,posX,posY,destX,destY);
-        } else if (destX > posX &&  destY < posY) {
+        } else if (destX > posX) {
             return bd.diagonalDownRightMove(pieceColor,posX,posY,destX,destY);
-        } else if (destX < posX && destY < posY) {
-            return bd.diagonalDownLeftMove(pieceColor, posX, posY, destX, destY);
         } else {
-            return false;
+            return bd.diagonalDownLeftMove(pieceColor, posX, posY, destX, destY);
         }
     }
 
-    // EFFECTS: Chooses in which direction vertically or horizontally should the piece move
+    // EFFECTS: Chooses in which direction vertically or horizontally should the piece move, if movement of the piece
+    //          does not describe a straight line returns false
     protected boolean moveInStraightLine(int destX, int destY) {
-        if (destY > posY) {
+        if (destX != posX && destY != posY) {
+            return false;
+        } else if (destY > posY) {
             return bd.verticalForwardMove(pieceColor,posX,posY,destX,destY);
         } else if (destY < posY) {
             return bd.verticalBackwardMove(pieceColor,posX,posY,destX,destY);
         } else  if (destX > posX) {
             return bd.horizontalRightwardMove(pieceColor,posX,posY,destX,destY);
-        }  else  if (destX < posX) {
+        }  else {
             return bd.horizontalLeftwardMove(pieceColor, posX, posY, destX, destY);
-        } else {
-            return false;
         }
     }
 }

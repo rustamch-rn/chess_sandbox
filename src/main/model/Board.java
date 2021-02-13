@@ -2,6 +2,7 @@ package model;
 
 public class Board {
 
+
     private boolean isOver;
     private Piece[][] tiles;
 
@@ -11,6 +12,8 @@ public class Board {
 
     }
 
+    //MODIFIES: This
+    //EFFECTS: Adds all the chess pieces to the board
     private void addPieces() {
         for (int i = 0; i < 8; i++) {
             tiles[1][i] = new Pawn(true, i, 1, this);
@@ -52,12 +55,18 @@ public class Board {
         return tiles;
     }
 
+    //MODIFIES: This
+    //EFFECTS: Sets the current game to be over
+    public void setOver() {
+        isOver = true;
+    }
 
     // EFFECTS : checks if there is a piece of a given color on the given square
     public boolean checkTile(boolean playerPieceColor, int posX, int posY) {
         if (tiles[posY][posX] != null) {
             Piece piece = tiles[posY][posX];
-            return piece.getPieceColor() == playerPieceColor;
+            boolean result = piece.getPieceColor() == playerPieceColor;
+            return result;
         }
         return false;
     }
@@ -74,13 +83,8 @@ public class Board {
         return false;
     }
 
-    //MODIFIES: This
-    //EFFECTS: Sets the current game to be over
-    public void setOver() {
-        isOver = true;
-    }
-
-    //EFFECTS: Checks if something is restricting moving of the figure on vertically forward,
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure vertically forward,
     //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean verticalForwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
@@ -98,12 +102,13 @@ public class Board {
     }
 
 
-    //EFFECTS: Checks if something is restricting moving of the figure on vertically backward,
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure vertically backward,
     //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean verticalBackwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
-        Piece currentSquare = tiles[origY - count][origX];
         while (origY - count >= 0) {
+            Piece currentSquare = tiles[origY - count][origX];
             if (origY - count == destY) {
                 return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
             }
@@ -115,7 +120,8 @@ public class Board {
         return false;
     }
 
-    //EFFECTS: Checks if something is restricting moving of the figure on horizontally rightward ,
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure horizontally rightward ,
     //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean horizontalRightwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
@@ -132,7 +138,8 @@ public class Board {
         return false;
     }
 
-    //EFFECTS: Checks if something is restricting moving of the figure on vertically backward,
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure horizontally rightward,
     //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean horizontalLeftwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
@@ -149,11 +156,12 @@ public class Board {
         return false;
     }
 
-    //EFFECTS: Checks if something is restricting moving of the figure on vertically backward,
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure diagonally to the top right corner,
     //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean diagonalUpRightMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
-        while (origY + count <= 7 && origY + count <= 7) {
+        while (origY + count <= 7 && origX + count <= 7) {
             Piece currentSquare = tiles[origY + count][origX + count];
             if (origY + count == destY && origX + count == destX) {
                 return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
@@ -166,6 +174,9 @@ public class Board {
         return false;
     }
 
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure diagonally to the top left corner,
+    //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean diagonalUpLeftMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY + count <= 7 && origX - count >= 0) {
@@ -181,6 +192,9 @@ public class Board {
         return false;
     }
 
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure diagonally to the bottom right corner,
+    //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean diagonalDownRightMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY - count >= 0 && origX + count <= 7) {
@@ -196,6 +210,9 @@ public class Board {
         return false;
     }
 
+    //REQUIRES: The original square should contain a piece.
+    //EFFECTS: Checks if something is restricting movement of the figure diagonally to the bottom left corner,
+    //         if nothing is restricting movement of the piece to destination square plays the move
     public boolean diagonalDownLeftMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY - count >= 0 && origX - count >= 0) {
@@ -212,6 +229,7 @@ public class Board {
     }
 
 
+    //EFFECTS: Returns false if there is a piece on a given square already
     public boolean checkConflictingPieces(Piece currentSquare) {
         return currentSquare != null;
     }
@@ -240,7 +258,11 @@ public class Board {
 
     }
 
-    private void takePiece(int posX, int posY) {
+
+    //REQUIRES: There is a piece on a given square
+    //MODIFIES: This
+    //EFFECTS: Removes a piece from the board, if the piece was a King sets game played on this board to be over
+    public void takePiece(int posX, int posY) {
         Piece p = tiles[posY][posX];
         if ('K' == p.getIdentifier()) {
             setOver();
@@ -248,19 +270,26 @@ public class Board {
         removePiece(posX, posY);
     }
 
+
+    //MODIFIES: This
+    //EFFECTS: removes a piece on a given tile
     public void removePiece(int posX, int posY) {
         tiles[posY][posX] = null;
     }
 
-
+    //EFFECTS: Produces the piece on a given tile
     public Piece getTile(int posX, int posY) {
         return tiles[posY][posX];
     }
 
+    // EFFECTS: Prints a basic visual representation of the board
     public void printBoard() {
-        for (Piece[] row : tiles) {
+        int row = 1;
+        for (int i = 7; i >= 0; i--) {
             System.out.println("");
-            for (Piece p : row) {
+            System.out.print((row + i) + " ");
+            for (int j = 0; j <= 7; j++) {
+                Piece p = getTile(j,i);
                 if (p == null) {
                     System.out.print("____|");
                 } else if (p.getPieceColor() == true) {
@@ -273,8 +302,20 @@ public class Board {
             }
         }
         System.out.println("");
+        printLetters();
+        System.out.println("");
     }
 
+    private void printLetters() {
+        System.out.print(" ");
+        String letters = "ABCDEFGH";
+        for (int i = 0; i <= 7; i++) {
+            System.out.print("  " + letters.charAt(i) + "  ");
+        }
+    }
+
+    //REQUIRES: The id of piece should be an id of a white piece
+    //EFFECTS: Produces texts that represent a figure which depend a type of piece
     private void printWhitePieces(char id) {
         switch (id) {
             case 'K':
@@ -297,6 +338,8 @@ public class Board {
         }
     }
 
+    //REQUIRES: The id of piece should be an id of a black piece
+    //EFFECTS: Produces texts that represent a figure which depend a type of piece
     private void printBlackPieces(char id) {
         switch (id) {
             case 'K':

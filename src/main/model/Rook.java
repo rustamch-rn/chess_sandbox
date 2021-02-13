@@ -9,15 +9,13 @@ public class Rook extends Piece {
         super(pieceColor,posX,posY,bd);
     }
 
+    //EFFECTS: Moves a rook in a straight line
     @Override
     public boolean makeMove(int destX, int destY) {
-        if (destX != posX && destY != posY) {
-            return false;
-        } else {
-            return moveInStraightLine(destX, destY);
-        }
+        return moveInStraightLine(destX, destY);
     }
 
+    //EFFECTS: Produces identifier of a given piece
     @Override
     public char getIdentifier() {
         return IDENTIFIER;
