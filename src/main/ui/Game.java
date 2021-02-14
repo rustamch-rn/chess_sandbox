@@ -74,17 +74,16 @@ public class Game {
             command = input.nextLine();
             origSquare = command;
         }
-        System.out.println("If you want to choose another piece enter q, otherwise press c to continue");
-        command = input.nextLine();
-        if (command.equals("q")) {
-            return true;
-        }
         System.out.println("Enter where you want to move your piece");
         command = input.nextLine();
         String destSquare = command;
         while (!pl.makeMove(origSquare,destSquare)) {
             System.out.println("Please check your input,\n Enter a new tile position");
+            System.out.println("If you want to choose another piece enter q");
             command = input.nextLine();
+            if (command.equals("q")) {
+                return true;
+            }
             destSquare = command;
         }
         return false;
