@@ -46,7 +46,9 @@ class BoardTest {
 
     @Test
     public void testCheckTile() {
-        assertEquals(false,b1.checkTile(true,2,6));
+        assertFalse(b1.checkTile(true,2,6));
+        assertFalse(b1.checkTile(true,2,5));
+        assertTrue(b1.checkTile(false,2,6));
         for (int i = 0; i < 16; i++){
             int x = i % 8;
             int y = i / 8;
@@ -238,5 +240,24 @@ class BoardTest {
     void testStatusSetting(){
         b1.setOver();
         assertEquals(true,b1.getStatus());
+    }
+
+    @Test
+    void testTakePiece() {
+        Piece p1 = new Queen(true,0,7,b2);
+        Piece p2 = new King(false,0,0,b2);
+        Piece p3 = new Queen(false,7,0,b2);
+        b2.setTile(p1,0,7);
+        b2.setTile(p2,0,0);
+        b2.setTile(p3,7,0);
+        b2.takePiece(0,7);
+        assertEquals(null,b2.getTile(0,7));
+        assertEquals(false,b2.getStatus());
+        b2.takePiece(0,0);
+        assertEquals(null,b2.getTile(0,0));
+        assertEquals(true,b2.getStatus());
+        b2.takePiece(7,0);
+        assertEquals(null,b2.getTile(7,0));
+        assertEquals(true,b2.getStatus());
     }
 }

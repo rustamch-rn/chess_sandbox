@@ -289,7 +289,7 @@ public class Board {
             System.out.println("");
             System.out.print((row + i) + " ");
             for (int j = 0; j <= 7; j++) {
-                Piece p = getTile(j,i);
+                Piece p = getTile(j, i);
                 if (p == null) {
                     System.out.print("____|");
                 } else if (p.getPieceColor() == true) {
@@ -306,6 +306,7 @@ public class Board {
         System.out.println("");
     }
 
+    // EFFECTS: Prints letter for a responing collumn on the board
     private void printLetters() {
         System.out.print(" ");
         String letters = "ABCDEFGH";
@@ -360,5 +361,25 @@ public class Board {
             default:
                 System.out.print("_BP_|");
         }
+    }
+
+    //MODIFIES: This
+    //EFFECTS: Produces true if the given square is under attack, false otherwise
+    public boolean checkUnderAttack(boolean pieceColor, int destX, int destY) {
+        for (Piece[] row : tiles) {
+            for (Piece p : row) {
+                if (p != null) {
+                    int origX = p.posX;
+                    int origY = p.posY;
+                    if (p.getPieceColor() != pieceColor && p.makeMove(destX, destY)) {
+                        removePiece(destX, destY);
+                        p.setPosX(origX);
+                        p.setPosY(origY);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

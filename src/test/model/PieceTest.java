@@ -16,7 +16,17 @@ public class PieceTest {
         Piece[][] tiles = bd.getTiles();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                bd.removePiece(j,i);
+                bd.removePiece(j, i);
+            }
+        }
+        bd.printBoard();
+    }
+
+    public void clearBoard(Board bd) {
+        Piece[][] tiles = bd.getTiles();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                bd.removePiece(j, i);
             }
         }
         bd.printBoard();
@@ -24,89 +34,314 @@ public class PieceTest {
 
     @Test
     public void diagonalMovesTest() {
-        p = new Queen(true,4,4,bd);
-        bd.setTile(p,4,4);
-        assertTrue(p.moveDiagonally(5,5));
-        assertFalse(p.moveDiagonally(2,7));
-        assertTrue(p.moveDiagonally(4,6));
-        assertFalse(p.moveDiagonally(1,6));
-        assertTrue(p.moveDiagonally(3,5));
-        assertFalse(p.moveDiagonally(4,7));
-        assertTrue(p.moveDiagonally(2,4));
-        assertFalse(p.moveDiagonally(3,4));
-        assertFalse(p.moveDiagonally(2,3));
-        assertTrue(p.moveDiagonally(3,3));
+        p = new Queen(true, 4, 4, bd);
+        bd.setTile(p, 4, 4);
+        assertTrue(p.moveDiagonally(5, 5));
+        assertFalse(p.moveDiagonally(2, 7));
+        assertTrue(p.moveDiagonally(4, 6));
+        assertFalse(p.moveDiagonally(1, 6));
+        assertTrue(p.moveDiagonally(3, 5));
+        assertFalse(p.moveDiagonally(4, 7));
+        assertTrue(p.moveDiagonally(2, 4));
+        assertFalse(p.moveDiagonally(3, 4));
+        assertFalse(p.moveDiagonally(2, 3));
+        assertTrue(p.moveDiagonally(3, 3));
 
     }
 
     @Test
     public void staightLineMovesTest() {
-        p = new Queen(true,4,4,bd);
-        bd.setTile(p,4,4);
-        assertTrue(p.moveInStraightLine(7,4));
-        assertFalse(p.moveInStraightLine(5,5));
-        assertTrue(p.moveInStraightLine(7,7));
-        assertFalse(p.moveInStraightLine(4,6));
-        assertTrue(p.moveInStraightLine(0,7));
-        assertFalse(p.moveInStraightLine(6,1));
+        p = new Queen(true, 4, 4, bd);
+        bd.setTile(p, 4, 4);
+        assertTrue(p.moveInStraightLine(7, 4));
+        assertFalse(p.moveInStraightLine(5, 5));
+        assertTrue(p.moveInStraightLine(7, 7));
+        assertFalse(p.moveInStraightLine(4, 6));
+        assertTrue(p.moveInStraightLine(0, 7));
+        assertFalse(p.moveInStraightLine(6, 1));
     }
+
     @Test
     public void rookTest() {
-        p = new Rook(true,0,0,bd);
-        bd.setTile(p,0,0);
-        assertEquals('R',p.getIdentifier());
-        assertFalse(p.makeMove(7,7));
-        assertTrue(p.makeMove(0,7));
-        assertFalse(p.makeMove(7,0));
-        assertTrue(p.makeMove(7,7));
-        assertFalse(p.makeMove(0,7));
-        assertTrue(p.makeMove(7,0));
+        p = new Rook(true, 0, 0, bd);
+        bd.setTile(p, 0, 0);
+        assertEquals('R', p.getIdentifier());
+        assertFalse(p.makeMove(7, 7));
+        assertTrue(p.makeMove(0, 7));
+        assertFalse(p.makeMove(7, 0));
+        assertTrue(p.makeMove(7, 7));
+        assertFalse(p.makeMove(0, 7));
+        assertTrue(p.makeMove(7, 0));
     }
 
     @Test
     public void queenTest() {
-        p = new Queen(true,0,0,bd);
-        bd.setTile(p,0,0);
-        assertEquals('Q',p.getIdentifier());
-        assertTrue(p.makeMove(7,7));
-        assertFalse(p.makeMove(5,4));
-        assertTrue(p.makeMove(0,7));
-        assertTrue(p.makeMove(0,6));
+        p = new Queen(true, 0, 0, bd);
+        bd.setTile(p, 0, 0);
+        assertEquals('Q', p.getIdentifier());
+        assertTrue(p.makeMove(7, 7));
+        assertFalse(p.makeMove(5, 4));
+        assertTrue(p.makeMove(0, 7));
+        assertTrue(p.makeMove(0, 6));
     }
 
     @Test
     public void bishopTest() {
-        p = new Bishop(true,0,0,bd);
-        bd.setTile(p,0,0);
-        assertEquals('B',p.getIdentifier());
-        assertTrue(p.makeMove(4,4));
-        assertFalse(p.makeMove(0,7));
-        assertFalse(p.makeMove(7,0));
-        assertTrue(p.makeMove(7,7));
-        assertFalse(p.makeMove(0,7));
-        assertTrue(p.makeMove(6,6));
+        p = new Bishop(true, 0, 0, bd);
+        bd.setTile(p, 0, 0);
+        assertEquals('B', p.getIdentifier());
+        assertTrue(p.makeMove(4, 4));
+        assertFalse(p.makeMove(0, 7));
+        assertFalse(p.makeMove(7, 0));
+        assertTrue(p.makeMove(7, 7));
+        assertFalse(p.makeMove(0, 7));
+        assertTrue(p.makeMove(6, 6));
     }
 
     @Test
     public void kingTest() {
-        p = new King(true,4,4,bd);
-        bd.setTile(p,4,4);
-        assertEquals('K',p.getIdentifier());
-        assertFalse(p.makeMove(6,4));
-        assertFalse(p.makeMove(4,6));
-        assertFalse(p.makeMove(2,4));
-        assertFalse(p.makeMove(4,2));
-        assertTrue(p.makeMove(4,5));
-        assertTrue(p.makeMove(5,6));
-        assertTrue(p.makeMove(6,6));
-        assertTrue(p.makeMove(7,5));
-        assertTrue(p.makeMove(7,4));
-        assertTrue(p.makeMove(6,3));
-        assertTrue(p.makeMove(5,3));
-        assertTrue(p.makeMove(5,2));
-        assertTrue(p.makeMove(4,3));
+        p = new King(true, 4, 4, bd);
+        bd.setTile(p, 4, 4);
+        assertEquals('K', p.getIdentifier());
+        assertFalse(p.makeMove(2, 4));
+        assertFalse(p.makeMove(4, 6));
+        assertFalse(p.makeMove(2, 4));
+        assertFalse(p.makeMove(4, 2));
+        assertTrue(p.makeMove(4, 5));
+        assertTrue(p.makeMove(5, 6));
+        assertTrue(p.makeMove(6, 6));
+        assertTrue(p.makeMove(7, 5));
+        assertTrue(p.makeMove(7, 4));
+        assertTrue(p.makeMove(6, 3));
+        assertTrue(p.makeMove(5, 3));
+        assertTrue(p.makeMove(5, 2));
+        assertTrue(p.makeMove(4, 3));
 
     }
+
+    @Test
+    public void shortCastleTestSucc() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 7, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        assertTrue(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF1() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 7, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        assertTrue(p.makeMove(5, 0));
+    }
+
+    @Test
+    public void shortCastleTestF2() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 7, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        assertFalse(p.makeMove(6, 1));
+    }
+    @Test
+    public void shortCastleTestF3() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 7, 0, bd);
+        Piece b = new Bishop(true,5,0,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        bd.setTile(b,5,0);
+        assertFalse(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF4() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 7, 0, bd);
+        Piece n = new Knight(true,6,0,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        bd.setTile(n,6,0);
+        assertFalse(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF5() {
+        p = new King(true, 4, 0, bd);
+        bd.setTile(p, 4, 0);
+        assertFalse(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF6() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 7, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        assertTrue(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF7() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Pawn(true, 7, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        assertFalse(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF8() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(false, 7, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 7, 0);
+        assertFalse(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF9() {
+        p = new King(true, 4, 0, bd);
+        Piece rw = new Rook(true, 7, 0, bd);
+        Piece rb = new Rook(false, 6, 7, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(rw, 7, 0);
+        bd.setTile(rb,6,7);
+        assertFalse(p.makeMove(6, 0));
+    }
+
+    @Test
+    public void shortCastleTestF10() {
+    p = new King(true, 4, 0, bd);
+    Piece rw = new Rook(true, 7, 0, bd);
+    Piece rb = new Rook(false, 5, 7, bd);
+    bd.setTile(p, 4, 0);
+    bd.setTile(rw, 7, 0);
+    bd.setTile(rb,5,7);
+    assertFalse(p.makeMove(6, 0));
+    }
+
+
+    @Test
+    public void longCastleTestSucc() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        assertTrue(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF1() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        assertFalse(p.makeMove(2, 0));
+    }
+
+    @Test
+    public void longCastleTestF2() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        assertFalse(p.makeMove(1, 1));
+    }
+
+    @Test
+    public void longCastleTestF3() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece q = new Queen(true,3,0,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(q,3,0);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF4() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece b = new Bishop(true,2,0,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(b,2,0);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF5() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece n = new Knight(true,1,0,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(n,1,0);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF6() {
+        p = new King(true, 4, 0, bd);
+        bd.setTile(p, 4, 0);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF7() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(false, 0, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r,0,0);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF8() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Pawn(true, 0, 0, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r,0,0);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF9() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece qb = new Queen(false,3,7,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(qb,3,7);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF10() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece qb = new Queen(false,2,7,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(qb,2,7);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF11() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece qb = new Queen(false,1,7,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(qb,1,7);
+        assertFalse(p.makeMove(1, 0));
+    }
+
 
     @Test
     public void knightTest() {
