@@ -1,13 +1,12 @@
 package model;
 
-import java.util.List;
-
+// Abstract template for a piece of all the pieces
 public abstract class Piece {
 
-    protected boolean pieceColor;
-    protected int posX;
-    protected int posY;
-    protected Board bd;
+    protected boolean pieceColor; // Color of this piece: true == White ; false == Black
+    protected int posX; // X position of this piece on the board
+    protected int posY; // Y position of this piece on the board
+    protected Board bd; // Board on which current piece resides
 
 
     //EFFECTS: Constructs a new piece

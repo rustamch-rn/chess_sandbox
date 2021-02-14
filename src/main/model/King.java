@@ -1,10 +1,11 @@
 package model;
 
-
+// Represents a King
 public class King extends Piece {
 
-    private static final char IDENTIFIER = 'K';
-    private boolean firstMove;
+    private static final char IDENTIFIER = 'K'; // Identifier of king used by external methods to identify a piece
+
+    private boolean firstMove; // Shows if it is a first time this piece is moved or not
 
 
     // EFFECTS: constructs a new King

@@ -1,13 +1,13 @@
 package model;
 
+// Represents a chess game board
 public class Board {
 
-
-    private boolean isOver;
-    private Piece[][] tiles;
+    private boolean isOver; // Status of the game
+    private final Piece[][] tiles; // All the tiles on the board
 
     public Board() {
-        this.tiles = new Piece[8][8];
+        this.tiles = new Piece[8][8]; //
         addPieces();
 
     }
@@ -65,8 +65,7 @@ public class Board {
     public boolean checkTile(boolean playerPieceColor, int posX, int posY) {
         if (tiles[posY][posX] != null) {
             Piece piece = tiles[posY][posX];
-            boolean result = piece.getPieceColor() == playerPieceColor;
-            return result;
+            return piece.getPieceColor() == playerPieceColor;
         }
         return false;
     }
@@ -286,13 +285,13 @@ public class Board {
     public void printBoard() {
         int row = 1;
         for (int i = 7; i >= 0; i--) {
-            System.out.println("");
+            System.out.println();
             System.out.print((row + i) + " ");
             for (int j = 0; j <= 7; j++) {
                 Piece p = getTile(j, i);
                 if (p == null) {
                     System.out.print("____|");
-                } else if (p.getPieceColor() == true) {
+                } else if (p.getPieceColor()) {
                     char id = p.getIdentifier();
                     printWhitePieces(id);
                 } else {
@@ -301,12 +300,12 @@ public class Board {
                 }
             }
         }
-        System.out.println("");
+        System.out.println();
         printLetters();
-        System.out.println("");
+        System.out.println();
     }
 
-    // EFFECTS: Prints letter for a responing collumn on the board
+    // EFFECTS: Prints letter for a responding column on the board
     private void printLetters() {
         System.out.print(" ");
         String letters = "ABCDEFGH";

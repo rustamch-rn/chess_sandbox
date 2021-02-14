@@ -1,11 +1,12 @@
 package model;
 
 
+// Represents a pawn
 public class Pawn extends Piece {
 
-    private static final char IDENTIFIER = 'P';
+    private static final char IDENTIFIER = 'P'; // Identifier of pawn used by external methods to identify a piece
 
-    private boolean firstMove;
+    private boolean firstMove; // Shows if it is a first time this piece is moved or not
 
     public Pawn(boolean pieceColor,int posX,int posY,Board bd) {
         super(pieceColor,posX,posY,bd);
@@ -17,7 +18,7 @@ public class Pawn extends Piece {
     //EFFECTS: Checks color of the pawn and moves it accordingly
     @Override
     public boolean makeMove(int destX, int destY) {
-        if (pieceColor == true) {
+        if (pieceColor) {
             return pawnMoveWhite(destX,destY);
         } else {
             return pawnMoveBlack(destX,destY);

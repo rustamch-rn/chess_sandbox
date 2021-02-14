@@ -1,11 +1,11 @@
 package model;
 
+// Represents a player, who is playing chess with either black or white pieces
 public class Player {
 
-
-    private boolean pieceColor;
-    private Board playingBoard;
-    private String playerName;
+    private final boolean pieceColor; // Color of pieces which this player controls
+    private final Board playingBoard; // Board on which this player plays
+    private final String playerName; // Name of this player
 
     // EFFECTS: Constructs a new Player
     public Player(boolean pieceColor,Board playingBoard,String playerName) {
@@ -25,6 +25,8 @@ public class Player {
         return pieceColor;
     }
 
+    //REQUIRES: origSquare position should be formatted as following  - A1,
+    //          where A represents horizontal position of the piece and 1 represents a vertical position
     //EFFECTS: Checks if there is a piece on a given square
     public boolean checkPieceSelection(String origSquare) {
         int y = Integer.parseInt(origSquare.substring(1,2)) - 1;
@@ -57,6 +59,8 @@ public class Player {
         }
     }
 
+    //REQUIRES: origSquare and destSquare positions should be formatted as following  - A1,
+    //          where A represents horizontal position of the piece and 1 represents a vertical position
     //MODIFIES: Board playingBoard
     //EFFECTS: Returns a true if player's move is legal, if it is legal casts given move on a board,
     //         returns false otherwise

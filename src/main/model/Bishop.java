@@ -1,9 +1,9 @@
 package model;
 
-
+// Represents a Bishop
 public class Bishop extends Piece {
 
-    private static final char IDENTIFIER = 'B';
+    private static final char IDENTIFIER = 'B'; // Identifier of bishop by external methods to identify a piece
 
     //EFFECTS: Constructs a new Bishop
     public Bishop(boolean pieceColor, int posX, int posY, Board bd) {
