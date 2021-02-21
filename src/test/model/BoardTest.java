@@ -1,5 +1,10 @@
 package model;
 
+import model.game.Board;
+import model.pieces.King;
+import model.pieces.Pawn;
+import model.pieces.Piece;
+import model.pieces.Queen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,6 @@
-package model;
+package model.pieces;
+
+import model.game.Board;
 
 // Represents a Bishop
 public class Bishop extends Piece {
@@ -7,7 +9,12 @@ public class Bishop extends Piece {
 
     //EFFECTS: Constructs a new Bishop
     public Bishop(boolean pieceColor, int posX, int posY, Board bd) {
-        super(pieceColor,posX,posY,bd);
+        super(pieceColor,posX,posY,bd,IDENTIFIER);
+    }
+
+
+    public Bishop(boolean pieceColor, int posX, int posY) {
+        super(pieceColor,posX,posY,IDENTIFIER);
     }
 
 
@@ -16,12 +23,4 @@ public class Bishop extends Piece {
     public boolean makeMove(int destX, int destY) {
         return moveDiagonally(destX,destY);
     }
-
-    //EFFECTS: Produces identifier of a given piece
-    @Override
-    public char getIdentifier() {
-        return IDENTIFIER;
-    }
-
-
 }

@@ -1,5 +1,11 @@
 package ui;
 
+import model.game.Game;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,14 +14,20 @@ import java.util.Scanner;
 // Represents a menu of the chess game, user can either create a new game to play or load already existing one
 public class GameMenu {
 
+    private static final String JSON_STORE = "./data/gameNameStorage.json";
+    private static final String JSON_DIRECTORY = "./data/";
     private final Scanner input; // Scanner that parses input of the user
-    private final List<Game> games; // List of the games that user already created
-    private final List<String> gameNames; // Names of the games that user has created
+
+    private List<String> gameNames;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     public GameMenu() {
-        input = new Scanner(System.in);
-        games = new ArrayList<>();
         gameNames = new ArrayList<>();
+        input = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        loadGameNames();
         instantiateMenu();
     }
 
@@ -34,21 +46,14 @@ public class GameMenu {
     // EFFECTS: Checks the user's input, and after that, either creates a new game or opens already existing one
     private void checkInstructions(String command) {
         if (command.equals("e")) {
-            if (games.size() == 0) {
-                System.out.println("Hmm... It looks like you haven't created any games yet");
-                createNewGame();
-            } else {
-                System.out.println("Here is a list of games that you already created:");
-                printGameNames();
-                System.out.println("Enter name of game that you wanna play:");
-                command = input.nextLine();
-                if (gameNames.contains(command)) {
-                    Game g = findGame(command);
-                    assert g != null;
-                    g.playTheGame();
-                }
-                System.out.println("Game with given name doesn't exist, try again!");
-            }
+            System.out.println("Here is a list of games that you already created:");
+            printNames();
+            System.out.println("Enter name of game that you wanna play:");
+            command = input.nextLine();
+            Game g = loadGame(command);
+            GameRunner gr = new GameRunner(g);
+            g = gr.getGame();
+            saveGame(g);
         } else if (command.equals("n")) {
             createNewGame();
         } else {
@@ -56,27 +61,52 @@ public class GameMenu {
         }
     }
 
+    private void printNames() {
+        for (String str : gameNames) {
+            System.out.print(str + ", ");
+        }
+        System.out.println();
+    }
+
+    private void saveGame(Game g) {
+        String fileName = g.getName();
+        if (!gameNames.contains(fileName)) {
+            gameNames.add(fileName);
+        }
+        try {
+            jsonWriter.open();
+            jsonWriter.writeNames(gameNames);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        jsonWriter = new JsonWriter(JSON_DIRECTORY + fileName + ".json");
+        try {
+            jsonWriter.open();
+            jsonWriter.write(g);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void loadGameNames() {
+        try {
+            gameNames = jsonReader.readNames();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // EFFECTS: Prints instructions for the user
     private void printInstructions() {
         System.out.println("Welcome to Chess!!!");
-        System.out.println("    If you want to play already existing game enter - e");
-        System.out.println("    If you want to create a new game enter - n");
-        System.out.println("    If you want to quit enter -  q");
+        System.out.println("\tIf you want to play already existing game enter   -> e");
+        System.out.println("\tIf you want to create a new game enter            -> n");
+        System.out.println("\tIf you want to quit enter                         -> q");
     }
 
-
-    //REQUIRES: The game with given name must exist
-    //EFFECTS: Returns a game with given name
-    private Game findGame(String command) {
-        int count = 0;
-        while (gameNames.size() > count) {
-            if (command.equals(gameNames.get(count))) {
-                return games.get(count);
-            }
-            count++;
-        }
-        return null;
-    }
 
     //MODIFIES: This
     //EFFECTS: Creates a new game with name specified by the user
@@ -87,16 +117,22 @@ public class GameMenu {
             System.out.println("Game with given name already exists! Enter another name for your game:");
             command = input.nextLine();
         }
-        Game g = new Game();
-        games.add(g);
-        gameNames.add(command);
+        GameRunner gr = new GameRunner(command);
+        Game g = gr.getGame();
+        saveGame(g);
     }
 
-    //EFFECTS: Prints names of all the current games
-    private void printGameNames() {
-        for (String str : gameNames) {
-            System.out.print(str + ", ");
+    private Game loadGame(String command) {
+        String dir = JSON_DIRECTORY + command + ".json";
+        Game g = null;
+        jsonReader = new JsonReader(dir);
+        try {
+            g = jsonReader.read();
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + dir);
         }
-        System.out.println();
+        return g;
     }
+
+
 }

@@ -1,17 +1,20 @@
-package model;
+package model.pieces;
+
+import model.game.Board;
 
 // Represents a King
 public class King extends Piece {
 
     private static final char IDENTIFIER = 'K'; // Identifier of king used by external methods to identify a piece
 
-    private boolean firstMove; // Shows if it is a first time this piece is moved or not
-
 
     // EFFECTS: constructs a new King
-    public King(boolean pieceColor,int posX,int posY,Board bd) {
-        super(pieceColor,posX,posY,bd);
-        firstMove = true;
+    public King(boolean pieceColor, int posX, int posY, Board bd) {
+        super(pieceColor,posX,posY,bd,IDENTIFIER);
+    }
+
+    public King(boolean pieceColor, int posX, int posY) {
+        super(pieceColor,posX,posY,IDENTIFIER);
     }
 
     //MODIFIES: This
@@ -57,6 +60,7 @@ public class King extends Piece {
         Piece q = bd.getTile(destX + 2,destY);
         Piece b = bd.getTile(destX + 1,destY);
         Piece n = bd.getTile(destX,destY);
+        boolean attackSqK = bd.checkUnderAttack(pieceColor,posX,posY);
         boolean attackSqB = bd.checkUnderAttack(pieceColor,destX + 1,destY);
         boolean attackSqN = bd.checkUnderAttack(pieceColor,destX,destY);
         boolean attackSqQ = bd.checkUnderAttack(pieceColor,destX + 2,destY);
@@ -69,10 +73,8 @@ public class King extends Piece {
             return false;
         } else if (rook.getPieceColor() != pieceColor || rook.getIdentifier() != 'R') {
             return false;
-        } else if (attackSqB || attackSqN || attackSqQ) {
-            return false;
         } else {
-            return true;
+            return !attackSqK && !attackSqB && !attackSqN && !attackSqQ;
         }
     }
 
@@ -83,6 +85,7 @@ public class King extends Piece {
         }
         Piece b = bd.getTile(destX - 1,destY);
         Piece n = bd.getTile(destX,destY);
+        boolean attackSqK = bd.checkUnderAttack(pieceColor,posX,posY);
         boolean attackSqN = bd.checkUnderAttack(pieceColor,destX,destY);
         boolean attackSqB = bd.checkUnderAttack(pieceColor,destX - 1,destY);
         Piece rook = bd.getTile(destX + 1,destY);
@@ -94,7 +97,7 @@ public class King extends Piece {
             return false;
         } else if (rook.getPieceColor() != pieceColor || rook.getIdentifier() != 'R') {
             return false;
-        } else if (attackSqB || attackSqN) {
+        } else if (attackSqK || attackSqB || attackSqN) {
             return false;
         } else {
             return true;
@@ -119,13 +122,6 @@ public class King extends Piece {
         Piece r = new Rook(pieceColor,destX + 2,destY,bd);
         bd.setTile(r,destX + 2,destY);
         return true;
-    }
-
-
-    //EFFECTS: Produces identifier of a given piece
-    @Override
-    public char getIdentifier() {
-        return IDENTIFIER;
     }
 
 }

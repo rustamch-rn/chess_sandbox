@@ -1,17 +1,19 @@
-package model;
+package model.pieces;
 
+
+import model.game.Board;
 
 // Represents a pawn
 public class Pawn extends Piece {
 
     private static final char IDENTIFIER = 'P'; // Identifier of pawn used by external methods to identify a piece
 
-    private boolean firstMove; // Shows if it is a first time this piece is moved or not
+    public Pawn(boolean pieceColor, int posX, int posY, Board bd) {
+        super(pieceColor,posX,posY,bd,IDENTIFIER);
+    }
 
-    public Pawn(boolean pieceColor,int posX,int posY,Board bd) {
-        super(pieceColor,posX,posY,bd);
-        this.firstMove = true;
-
+    public Pawn(boolean pieceColor, int posX, int posY) {
+        super(pieceColor,posX,posY,IDENTIFIER);
     }
 
 
@@ -78,13 +80,13 @@ public class Pawn extends Piece {
     //EFFECTS: Checks forward move rules if given pawn move satisfies rules for piece promotion, creates a queen on
     //         a destination square
     public boolean forwardMove(int destX,int destY) {
-        if (bd.getTile(destX,destY) != null) {
+        if (bd.getTile(destX, destY) != null) {
             return false;
-        } else if  (destY == 0) {
+        } else if (destY == 0) {
             Piece p = new Queen(false, destX, destY, bd);
             bd.setTile(p, destX, destY);
             return true;
-        } else if  (destY == 7) {
+        } else if (destY == 7) {
             Piece p = new Queen(true, destX, destY, bd);
             bd.setTile(p, destX, destY);
             return true;
@@ -92,12 +94,4 @@ public class Pawn extends Piece {
             return moveInStraightLine(destX, destY);
         }
     }
-
-    //EFFECTS: Returns identifier of a given piece
-    @Override
-    public char getIdentifier() {
-        return IDENTIFIER;
-    }
-
-
 }

@@ -1,43 +1,57 @@
 package ui;
 
-import model.Board;
-import model.Player;
+import model.game.Board;
+import model.game.Game;
+import model.game.Player;
 
 import java.util.Scanner;
 
 // Represents a chess game, which has 2 players and a board on which they are playing
-public class Game {
+public class GameRunner {
 
     private Scanner input; // User input
-    private Board bd; // Board on which this game is played
-    private Player pl1; // Player that controls white pieces
-    private Player pl2; // Player that controls black pieces
+    private Game game; // Game this GameRunner runs
 
-    // EFFECTS: Initialises the scanner and starts the game
-    public Game() {
+
+    public GameRunner(String gameName) {
         input = new Scanner(System.in);
-        initializeGame();
+        initializeGame(gameName);
+    }
+
+    public GameRunner(Game game) {
+        input = new Scanner(System.in);
+        this.game = game;
+        launchTheGame();
     }
 
     // MODIFIES: This
     // EFFECTS: Initialises a new chess game
-    private void initializeGame() {
+    private void initializeGame(String gameName) {
         String command;
-        bd = new Board();
+        Board bd = new Board();
         System.out.println("Player1 enter your name:");
         command = input.nextLine();
-        pl1 = new Player(true, bd, command);
+        Player pl1 = new Player(true, bd, command);
         System.out.println("Player2 enter your name:");
         command = input.nextLine();
-        pl2 = new Player(false, bd, command);
+        Player pl2 = new Player(false, bd, command);
         System.out.println("Welcome to Chess!!!");
-        playTheGame();
+        Game g = new Game(gameName,bd,pl1,pl2);
+        this.game = g;
+        launchTheGame();
     }
 
     // REQUIRES: User input should be a square within the board.
     // EFFECTS: The moves are casted on the board, until one player loses.
-    public void playTheGame() {
+    public void launchTheGame() {
+        Board bd = game.getBoard();
+        Player pl1 = game.getPlayer1();
+        Player pl2 = game.getPlayer2();
         bd.printBoard();
+        playTheGame(bd,pl1,pl2);
+    }
+
+    public void playTheGame(Board bd, Player pl1, Player pl2) {
         while (true) {
             System.out.println("If you want to close this game enter q, press enter otherwise");
             String command = input.nextLine();
@@ -58,7 +72,6 @@ public class Game {
                 System.out.println("Checkmate! Good job " + pl2.getName() + "!");
                 break;
             }
-
         }
     }
 
@@ -89,4 +102,7 @@ public class Game {
         return false;
     }
 
+    public Game getGame() {
+        return game;
+    }
 }

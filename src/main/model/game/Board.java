@@ -1,15 +1,25 @@
-package model;
+package model.game;
+
+import model.pieces.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 // Represents a chess game board
-public class Board {
+public class Board implements Writable {
 
     private boolean isOver; // Status of the game
     private final Piece[][] tiles; // All the tiles on the board
 
     public Board() {
         this.tiles = new Piece[8][8]; //
+        isOver = false;
         addPieces();
+    }
 
+    public Board(Piece[][] tiles, boolean status) {
+        this.tiles = tiles;
+        this.isOver = status;
     }
 
     //MODIFIES: This
@@ -368,17 +378,54 @@ public class Board {
         for (Piece[] row : tiles) {
             for (Piece p : row) {
                 if (p != null) {
-                    int origX = p.posX;
-                    int origY = p.posY;
+                    int origX = p.getPosX();
+                    int origY = p.getPosY();
                     if (p.getPieceColor() != pieceColor && p.makeMove(destX, destY)) {
                         removePiece(destX, destY);
                         p.setPosX(origX);
                         p.setPosY(origY);
+                        if (p.getIdentifier() == 'K') {
+                            continue;
+                        }
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("status",isOver);
+        json.put("pieces", piecesToJson());
+        return json;
+    }
+
+    private JSONArray piecesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Piece[] row : tiles) {
+            for (Piece p : row) {
+                if (p == null) {
+                    jsonArray.put("null");
+                } else {
+                    jsonArray.put(p.toJson());
+                }
+            }
+        }
+        return  jsonArray;
+    }
+
+    public void piecesSetBoard() {
+        for (Piece[] row : tiles) {
+            for (Piece p : row) {
+                if (p == null) {
+                    continue;
+                } else {
+                    p.setBd(this);
+                }
+            }
+        }
     }
 }

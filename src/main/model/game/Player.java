@@ -1,7 +1,10 @@
-package model;
+package model.game;
+
+import org.json.JSONObject;
+import persistence.Writable;
 
 // Represents a player, who is playing chess with either black or white pieces
-public class Player {
+public class Player implements Writable {
 
     private final boolean pieceColor; // Color of pieces which this player controls
     private final Board playingBoard; // Board on which this player plays
@@ -74,5 +77,13 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("pieceColor",pieceColor);
+        jsonObject.put("name",playerName);
+        return jsonObject;
     }
 }

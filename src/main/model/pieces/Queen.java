@@ -1,5 +1,7 @@
-package model;
+package model.pieces;
 
+
+import model.game.Board;
 
 // Represents a Queen
 public class Queen extends Piece {
@@ -8,8 +10,12 @@ public class Queen extends Piece {
 
 
     //EFFECTS: Constructs a new Queen
-    public Queen(boolean pieceColor,int posX, int posY,Board bd) {
-        super(pieceColor,posX,posY,bd);
+    public Queen(boolean pieceColor, int posX, int posY, Board bd) {
+        super(pieceColor,posX,posY,bd,IDENTIFIER);
+    }
+
+    public Queen(boolean pieceColor, int posX, int posY) {
+        super(pieceColor,posX,posY,IDENTIFIER);
     }
 
 
@@ -23,13 +29,4 @@ public class Queen extends Piece {
             return moveDiagonally(destX,destY);
         }
     }
-
-    //EFFECTS: Produces Queen's identifier
-    @Override
-    public char getIdentifier() {
-        return IDENTIFIER;
-    }
-
-
-
 }

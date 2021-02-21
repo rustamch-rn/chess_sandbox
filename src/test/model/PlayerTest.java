@@ -1,5 +1,7 @@
 package model;
 
+import model.game.Board;
+import model.game.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

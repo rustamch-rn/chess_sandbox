@@ -1,5 +1,7 @@
 package model;
 
+import model.game.Board;
+import model.pieces.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,35 +32,6 @@ public class PieceTest {
             }
         }
         bd.printBoard();
-    }
-
-    @Test
-    public void diagonalMovesTest() {
-        p = new Queen(true, 4, 4, bd);
-        bd.setTile(p, 4, 4);
-        assertTrue(p.moveDiagonally(5, 5));
-        assertFalse(p.moveDiagonally(2, 7));
-        assertTrue(p.moveDiagonally(4, 6));
-        assertFalse(p.moveDiagonally(1, 6));
-        assertTrue(p.moveDiagonally(3, 5));
-        assertFalse(p.moveDiagonally(4, 7));
-        assertTrue(p.moveDiagonally(2, 4));
-        assertFalse(p.moveDiagonally(3, 4));
-        assertFalse(p.moveDiagonally(2, 3));
-        assertTrue(p.moveDiagonally(3, 3));
-
-    }
-
-    @Test
-    public void staightLineMovesTest() {
-        p = new Queen(true, 4, 4, bd);
-        bd.setTile(p, 4, 4);
-        assertTrue(p.moveInStraightLine(7, 4));
-        assertFalse(p.moveInStraightLine(5, 5));
-        assertTrue(p.moveInStraightLine(7, 7));
-        assertFalse(p.moveInStraightLine(4, 6));
-        assertTrue(p.moveInStraightLine(0, 7));
-        assertFalse(p.moveInStraightLine(6, 1));
     }
 
     @Test
