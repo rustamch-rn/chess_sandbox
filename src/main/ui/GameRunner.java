@@ -93,11 +93,11 @@ public class GameRunner {
         while (!checkPlayerMoveChoice(pl, origSquare, destSquare)) {
             System.out.println("Please check your input,\n Enter a new tile position");
             System.out.println("If you want to choose another piece enter q");
-            command = input.next();
-            destSquare = command;
             if (command.equals("q")) {
                 return true;
             }
+            command = input.nextLine();
+            destSquare = command;
         }
         return false;
     }

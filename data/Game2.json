@@ -1,0 +1,272 @@
+{
+    "gameName": "Game2",
+    "player1": {
+        "pieceColor": true,
+        "name": "Rustam"
+    },
+    "player2": {
+        "pieceColor": false,
+        "name": "Dora"
+    },
+    "board": {
+        "pieces": [
+            {
+                "posX": 0,
+                "posY": 0,
+                "identifier": 82,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 1,
+                "posY": 0,
+                "identifier": 78,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 2,
+                "posY": 0,
+                "identifier": 66,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 3,
+                "posY": 0,
+                "identifier": 81,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 5,
+                "posY": 0,
+                "identifier": 82,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 6,
+                "posY": 0,
+                "identifier": 75,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 0,
+                "posY": 1,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 1,
+                "posY": 1,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 2,
+                "posY": 1,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 3,
+                "posY": 1,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 5,
+                "posY": 1,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 6,
+                "posY": 1,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            {
+                "posX": 7,
+                "posY": 1,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            "null",
+            "null",
+            "null",
+            "null",
+            "null",
+            {
+                "posX": 5,
+                "posY": 2,
+                "identifier": 78,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            "null",
+            "null",
+            "null",
+            "null",
+            {
+                "posX": 2,
+                "posY": 3,
+                "identifier": 66,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 4,
+                "posY": 3,
+                "identifier": 80,
+                "pieceColor": true,
+                "firstMove": true
+            },
+            "null",
+            "null",
+            "null",
+            "null",
+            "null",
+            {
+                "posX": 2,
+                "posY": 4,
+                "identifier": 66,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 4,
+                "posY": 4,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            "null",
+            "null",
+            "null",
+            "null",
+            "null",
+            {
+                "posX": 2,
+                "posY": 5,
+                "identifier": 78,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            "null",
+            "null",
+            "null",
+            "null",
+            {
+                "posX": 7,
+                "posY": 5,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 0,
+                "posY": 6,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 1,
+                "posY": 6,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 2,
+                "posY": 6,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 3,
+                "posY": 6,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 5,
+                "posY": 6,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 6,
+                "posY": 6,
+                "identifier": 80,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 0,
+                "posY": 7,
+                "identifier": 82,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 2,
+                "posY": 7,
+                "identifier": 66,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 3,
+                "posY": 7,
+                "identifier": 81,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 4,
+                "posY": 7,
+                "identifier": 75,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            "null",
+            {
+                "posX": 6,
+                "posY": 7,
+                "identifier": 78,
+                "pieceColor": false,
+                "firstMove": true
+            },
+            {
+                "posX": 7,
+                "posY": 7,
+                "identifier": 82,
+                "pieceColor": false,
+                "firstMove": true
+            }
+        ],
+        "status": false
+    }
+}
