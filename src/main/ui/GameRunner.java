@@ -36,7 +36,7 @@ public class GameRunner {
         command = input.nextLine();
         Player pl2 = new Player(false, bd, command);
         System.out.println("Welcome to Chess!!!");
-        Game g = new Game(gameName,bd,pl1,pl2);
+        Game g = new Game(gameName, bd, pl1, pl2);
         this.game = g;
         launchTheGame();
     }
@@ -48,7 +48,7 @@ public class GameRunner {
         Player pl1 = game.getPlayer1();
         Player pl2 = game.getPlayer2();
         bd.printBoard();
-        playTheGame(bd,pl1,pl2);
+        playTheGame(bd, pl1, pl2);
     }
 
     public void playTheGame(Board bd, Player pl1, Player pl2) {
@@ -82,7 +82,7 @@ public class GameRunner {
         String command;
         command = input.nextLine();
         String origSquare = command;
-        while (!pl.checkPieceSelection(origSquare)) {
+        while (!checkPlayerPieceChoice(pl, origSquare)) {
             System.out.println("Please check your input,\n Enter a new tile position");
             command = input.nextLine();
             origSquare = command;
@@ -90,14 +90,39 @@ public class GameRunner {
         System.out.println("Enter where you want to move your piece");
         command = input.nextLine();
         String destSquare = command;
-        while (!pl.makeMove(origSquare,destSquare)) {
+        while (!checkPlayerMoveChoice(pl, origSquare, destSquare)) {
             System.out.println("Please check your input,\n Enter a new tile position");
             System.out.println("If you want to choose another piece enter q");
-            command = input.nextLine();
+            command = input.next();
+            destSquare = command;
             if (command.equals("q")) {
                 return true;
             }
-            destSquare = command;
+        }
+        return false;
+    }
+
+    public boolean checkPlayerPieceChoice(Player pl, String origSquare) {
+        try {
+            if (pl.checkPieceSelection(origSquare)) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Your square should be a valid square on the board.(eg. A4, E8, G1)");
+            System.out.println("Input a new square.");
+        }
+        return false;
+    }
+
+    private boolean checkPlayerMoveChoice(Player pl, String origSquare, String destSquare) {
+        try {
+            if (pl.makeMove(origSquare, destSquare)) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println("Your square should be a valid square on the board.(eg. A4, E8, G1)");
+            System.out.println("Input a new square.");
+            return false;
         }
         return false;
     }
@@ -105,4 +130,5 @@ public class GameRunner {
     public Game getGame() {
         return game;
     }
+
 }

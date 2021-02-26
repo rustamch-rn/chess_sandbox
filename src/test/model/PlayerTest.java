@@ -31,25 +31,29 @@ public class PlayerTest {
 
     @Test
     public void testCheckPieceSelection(){
-        assertTrue(pl1.checkPieceSelection("H8"));
-        assertFalse(pl1.checkPieceSelection("D4"));
-        assertTrue(pl2.checkPieceSelection("D2"));
-        assertFalse(pl2.checkPieceSelection("D4"));
+        try {
+            assertTrue(pl1.checkPieceSelection("H8"));
+            assertFalse(pl1.checkPieceSelection("D4"));
+            assertTrue(pl2.checkPieceSelection("D2"));
+            assertFalse(pl2.checkPieceSelection("D4"));
+        } catch (Exception e) {
+            fail();
+        }
     }
 
-    @Test
-    public void makeMove(){
-
-        String origSquare1 = "A2"; // leftmost white pawn
-        String destSquare1 = "A4";
-        assertTrue(pl2.makeMove(origSquare1,destSquare1));
-        assertFalse(pl2.checkPieceSelection(origSquare1));
-
-        String origSquare2 = "A8"; // leftmost black rook
-        String destSquare2 = "A6";
-        assertFalse(pl1.makeMove(destSquare1,destSquare2));
-        assertTrue(pl1.checkPieceSelection(origSquare2));
-    }
+//    @Test
+//    public void makeMove(){
+//
+//        String origSquare1 = "A2"; // leftmost white pawn
+//        String destSquare1 = "A4";
+//        assertTrue(pl2.makeMove(origSquare1,destSquare1));
+//        assertFalse(pl2.checkPieceSelection(origSquare1));
+//
+//        String origSquare2 = "A8"; // leftmost black rook
+//        String destSquare2 = "A6";
+//        assertFalse(pl1.makeMove(destSquare1,destSquare2));
+//        assertTrue(pl1.checkPieceSelection(origSquare2));
+//    }
 
     @Test
     public void testletterToPos(){

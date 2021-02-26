@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 
@@ -27,7 +28,11 @@ public class GameMenu {
         input = new Scanner(System.in);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        loadGameNames();
+        try {
+            loadGameNames();
+        } catch (IOException e) {
+            saveGameName();
+        }
         instantiateMenu();
     }
 
@@ -39,17 +44,26 @@ public class GameMenu {
             if (command.equals("q")) {
                 break;
             }
-            checkInstructions(command);
+            try {
+                checkInstructions(command);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     // EFFECTS: Checks the user's input, and after that, either creates a new game or opens already existing one
-    private void checkInstructions(String command) {
+    private void checkInstructions(String command) throws IOException {
         if (command.equals("e")) {
             System.out.println("Here is a list of games that you already created:");
             printNames();
             System.out.println("Enter name of game that you wanna play:");
             command = input.nextLine();
+            while (!gameNames.contains(command)) {
+                System.out.println("You have not created game with this name yet.");
+                System.out.println("Enter a name of already existing game:");
+                command = input.nextLine();
+            }
             Game g = loadGame(command);
             GameRunner gr = new GameRunner(g);
             g = gr.getGame();
@@ -69,34 +83,40 @@ public class GameMenu {
     }
 
     private void saveGame(Game g) {
-        String fileName = g.getName();
-        if (!gameNames.contains(fileName)) {
-            gameNames.add(fileName);
-        }
-        try {
-            jsonWriter.open();
-            jsonWriter.writeNames(gameNames);
-            jsonWriter.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        jsonWriter = new JsonWriter(JSON_DIRECTORY + fileName + ".json");
-        try {
-            jsonWriter.open();
-            jsonWriter.write(g);
-            jsonWriter.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        System.out.println("Do you want to save this game?");
+        System.out.println("\tyes -- enter y");
+        System.out.println("\tno  -- enter n");
+        String command = input.nextLine();
+        if (command.toLowerCase(Locale.ROOT).equals("y")) {
+            String fileName = g.getName();
+            if (!gameNames.contains(fileName)) {
+                gameNames.add(fileName);
+            }
+            saveGameName();
+            jsonWriter = new JsonWriter(JSON_DIRECTORY + fileName + ".json");
+            try {
+                jsonWriter.open();
+                jsonWriter.write(g);
+                jsonWriter.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-
-    private void loadGameNames() {
+    private void saveGameName() {
         try {
-            gameNames = jsonReader.readNames();
-        } catch (IOException e) {
+            jsonWriter.open();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        jsonWriter.writeNames(gameNames);
+        jsonWriter.close();
+    }
+
+
+    private void loadGameNames() throws IOException {
+        gameNames = jsonReader.readNames();
     }
 
     // EFFECTS: Prints instructions for the user
@@ -122,15 +142,11 @@ public class GameMenu {
         saveGame(g);
     }
 
-    private Game loadGame(String command) {
+    private Game loadGame(String command) throws IOException {
         String dir = JSON_DIRECTORY + command + ".json";
-        Game g = null;
+        Game g;
         jsonReader = new JsonReader(dir);
-        try {
-            g = jsonReader.read();
-        } catch (IOException e) {
-            System.out.println("Unable to read from file: " + dir);
-        }
+        g = jsonReader.read();
         return g;
     }
 

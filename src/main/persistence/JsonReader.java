@@ -23,7 +23,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
+    // EFFECTS: reads a game from file and returns it;
     // throws IOException if an error occurs reading data from file
     public Game read() throws IOException {
         String jsonData = readFile(source);
@@ -31,12 +31,15 @@ public class JsonReader {
         return parseGame(jsonObject);
     }
 
+    // EFFECTS : reads a list with names of games and returns it;
+    // throws IOException if an error occurs reading data from file
     public List<String> readNames() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseGameNames(jsonObject);
     }
 
+    // EFFECTS : parses a list with name of the games from JSON object and returns it
     private List<String> parseGameNames(JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("gameNames");
         List<String> names = new ArrayList<>();
@@ -57,7 +60,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses workroom from JSON object and returns it
+    // EFFECTS: parses game from JSON object and returns it
     private Game parseGame(JSONObject jsonObject) {
         String name = jsonObject.getString("gameName");
         JSONObject bd = jsonObject.getJSONObject("board");
@@ -71,6 +74,7 @@ public class JsonReader {
         return g;
     }
 
+    // EFFECTS: parses the player from JSON object and returns it
     private Player parsePlayer(JSONObject player, Board board) {
         String name = player.getString("name");
         boolean pieceColor = player.getBoolean("pieceColor");
@@ -78,6 +82,7 @@ public class JsonReader {
         return pl;
     }
 
+    // EFFECTS: parses the board from the JSON object and returns it
     private Board parseBoard(JSONObject bd) {
         boolean st = bd.getBoolean("status");
         JSONArray tiles = bd.getJSONArray("pieces");
@@ -98,6 +103,7 @@ public class JsonReader {
         return board;
     }
 
+    // EFFECTS: parses a piece from JSON object and adds it to the board
     private Piece addPiece(JSONObject j) {
         boolean pieceColor = j.getBoolean("pieceColor");
         int x = j.getInt("posX");
@@ -107,6 +113,7 @@ public class JsonReader {
         return p;
     }
 
+    // EFFECTS: determines which piece should be created based on piece identifier
     private Piece pieceCreator(boolean pieceColor, int x, int y, char id) {
         Piece p;
         switch (id) {
