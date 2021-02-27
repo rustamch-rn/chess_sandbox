@@ -106,6 +106,7 @@ public abstract class Piece implements Writable {
         return posY;
     }
 
+    // EFFECTS: Transforms a piece to a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
@@ -115,6 +116,11 @@ public abstract class Piece implements Writable {
         jsonObject.put("firstMove",firstMove);
         jsonObject.put("identifier",identifier);
         return jsonObject;
+    }
+
+    // EFFECTS: Returns if it is the first move or not
+    public boolean getFirstMove() {
+        return firstMove;
     }
 }
 

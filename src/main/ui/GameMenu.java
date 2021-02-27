@@ -15,14 +15,15 @@ import java.util.Scanner;
 // Represents a menu of the chess game, user can either create a new game to play or load already existing one
 public class GameMenu {
 
-    private static final String JSON_STORE = "./data/gameNameStorage.json";
-    private static final String JSON_DIRECTORY = "./data/";
+    private static final String JSON_STORE = "./data/gameNameStorage.json"; // Save file of game names.
+    private static final String JSON_DIRECTORY = "./data/"; // General directory of all save files
     private final Scanner input; // Scanner that parses input of the user
 
-    private List<String> gameNames;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    private List<String> gameNames; // Names of the all current games
+    private JsonWriter jsonWriter; // JSON writer
+    private JsonReader jsonReader; // JSON Reader
 
+    // EFFECTS: Constructs a new game
     public GameMenu() {
         gameNames = new ArrayList<>();
         input = new Scanner(System.in);
@@ -75,6 +76,7 @@ public class GameMenu {
         }
     }
 
+    // EFFECTS: Prints names of the current games
     private void printNames() {
         for (String str : gameNames) {
             System.out.print(str + ", ");
@@ -82,6 +84,7 @@ public class GameMenu {
         System.out.println();
     }
 
+    // EFFECTS: Saves the game provided
     private void saveGame(Game g) {
         System.out.println("Do you want to save this game?");
         System.out.println("\tyes -- enter y");
@@ -104,6 +107,7 @@ public class GameMenu {
         }
     }
 
+    // EFFECTS : Saves names of the current games
     private void saveGameName() {
         try {
             jsonWriter.open();
@@ -115,6 +119,7 @@ public class GameMenu {
     }
 
 
+    // EFFECTS : Loads the names of existing games
     private void loadGameNames() throws IOException {
         gameNames = jsonReader.readNames();
     }
@@ -142,6 +147,7 @@ public class GameMenu {
         saveGame(g);
     }
 
+    // EFFECTS: Loads a game with a given name
     private Game loadGame(String command) throws IOException {
         String dir = JSON_DIRECTORY + command + ".json";
         Game g;

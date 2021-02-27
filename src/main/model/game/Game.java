@@ -34,9 +34,6 @@ public class Game implements Writable {
         return gameName;
     }
 
-    public String getGameName() {
-        return gameName;
-    }
 
     public Board getBoard() {
         return bd;

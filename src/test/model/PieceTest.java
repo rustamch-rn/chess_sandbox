@@ -287,9 +287,11 @@ public class PieceTest {
         p = new King(true, 4, 0, bd);
         Piece r = new Rook(true, 0, 0, bd);
         Piece qb = new Queen(false,3,7,bd);
+        Piece kb = new King(false,2,7,bd);
         bd.setTile(p, 4, 0);
         bd.setTile(r, 0, 0);
         bd.setTile(qb,3,7);
+        bd.setTile(kb,2,7);
         assertFalse(p.makeMove(1, 0));
     }
 

@@ -31,6 +31,7 @@ public class JsonWriter {
     public void write(Game g) {
         JSONObject json = g.toJson();
         saveToFile(json.toString(TAB));
+        System.out.println("Game was successfully saved!");
     }
 
     // EFFECTS: Converts names of the games to JSON and writes them to specified file

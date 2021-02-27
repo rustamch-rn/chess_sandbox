@@ -377,16 +377,15 @@ public class Board implements Writable {
     public boolean checkUnderAttack(boolean pieceColor, int destX, int destY) {
         for (Piece[] row : tiles) {
             for (Piece p : row) {
-                if (p != null) {
+                if (p != null && p.getPieceColor() != pieceColor) {
                     int origX = p.getPosX();
                     int origY = p.getPosY();
-                    if (p.getPieceColor() != pieceColor && p.makeMove(destX, destY)) {
+                    if (p.getIdentifier() == 'K' && p.getFirstMove()) {
+                        continue;
+                    } else if (p.makeMove(destX, destY)) {
                         removePiece(destX, destY);
                         p.setPosX(origX);
                         p.setPosY(origY);
-                        if (p.getIdentifier() == 'K') {
-                            continue;
-                        }
                         return true;
                     }
                 }

@@ -36,8 +36,7 @@ public class GameRunner {
         command = input.nextLine();
         Player pl2 = new Player(false, bd, command);
         System.out.println("Welcome to Chess!!!");
-        Game g = new Game(gameName, bd, pl1, pl2);
-        this.game = g;
+        this.game = new Game(gameName, bd, pl1, pl2);
         launchTheGame();
     }
 
@@ -102,6 +101,8 @@ public class GameRunner {
         return false;
     }
 
+    // EFFECTS: Checks if the validity of the players move;
+    //  if the square specified by the player is not valid catches the exception and asks for a new square
     public boolean checkPlayerPieceChoice(Player pl, String origSquare) {
         try {
             if (pl.checkPieceSelection(origSquare)) {
@@ -114,6 +115,8 @@ public class GameRunner {
         return false;
     }
 
+    // EFFECTS: Checks if the validity of the players move;
+    //  if the destination square specified by the player is not valid catches the exception and asks for a new square
     private boolean checkPlayerMoveChoice(Player pl, String origSquare, String destSquare) {
         try {
             if (pl.makeMove(origSquare, destSquare)) {

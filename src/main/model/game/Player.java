@@ -28,10 +28,9 @@ public class Player implements Writable {
         return pieceColor;
     }
 
-    //REQUIRES: origSquare position should be formatted as following  - A1,
-    //          where A represents horizontal position of the piece and 1 represents a vertical position
+
     //EFFECTS: Checks if there is a piece on a given square
-    public boolean checkPieceSelection(String origSquare)  throws Exception {
+    public boolean checkPieceSelection(String origSquare) {
         int y = Integer.parseInt(origSquare.substring(1,2)) - 1;
         int x = letterToPos(origSquare.substring(0,1));
         return playingBoard.checkTile(pieceColor,x,y);
@@ -62,11 +61,9 @@ public class Player implements Writable {
         }
     }
 
-    //REQUIRES: origSquare and destSquare positions should be formatted as following  - A1,
-    //          where A represents horizontal position of the piece and 1 represents a vertical position
     //MODIFIES: Board playingBoard
     //EFFECTS: Returns a true if player's move is legal, if it is legal casts given move on a board,
-    //         returns false otherwise
+    //         returns false and throws an exception
     public boolean makeMove(String origSquare,String destSquare) throws Exception {
         int origY = Integer.parseInt(origSquare.substring(1,2)) - 1;
         int origX = letterToPos(origSquare.substring(0,1));
