@@ -10,9 +10,11 @@
 
 <h3>User stories</h3>
 <ul>
-<li>As a user, I want to be sure that every move I play is legal.</li>
-<li>As a user, I want to be able to save multiple games.</li>
-<li>As a user, I want to see the names of all games that I saved.</li>
-<li>As a user, I want to see at least some basic representation of a board to have an idea of where my pieces at.</li>
+<li>As a user, I want to be sure that every move that I play is legal.</li>
+<li>As a user, I want to be able to add multiple games.</li>
+<li>As a user, I want to see the names of all games that I added.</li>
 <li>As a user, I want to close games and continue them exactly from where I left off when I reopen them.</li>
+<li>As a user, I want to see at least some basic representation of a board to have an idea of where my pieces at.</li>
+<li>As a user, I want to be able to save multiple games.</li>
+<li>As a user, I want to be able to either save or not my current progress in a given game.</li>
 </ul>
