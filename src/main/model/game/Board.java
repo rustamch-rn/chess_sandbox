@@ -380,14 +380,15 @@ public class Board implements Writable {
                 if (p != null && p.getPieceColor() != pieceColor) {
                     int origX = p.getPosX();
                     int origY = p.getPosY();
-                    if (p.getIdentifier() == 'K' && p.getFirstMove()) {
-                        continue;
-                    } else if (p.makeMove(destX, destY)) {
+                    boolean firstMove = p.getFirstMove();
+                    if (p.makeMove(destX, destY)) {
                         removePiece(destX, destY);
                         p.setPosX(origX);
                         p.setPosY(origY);
+                        p.setFirstMove(firstMove);
                         return true;
                     }
+                    p.setFirstMove(firstMove);
                 }
             }
         }
@@ -416,12 +417,11 @@ public class Board implements Writable {
         return  jsonArray;
     }
 
+    // EFFECTS: Sets the board of the piece to this board
     public void piecesSetBoard() {
         for (Piece[] row : tiles) {
             for (Piece p : row) {
-                if (p == null) {
-                    continue;
-                } else {
+                if (p != null) {
                     p.setBd(this);
                 }
             }

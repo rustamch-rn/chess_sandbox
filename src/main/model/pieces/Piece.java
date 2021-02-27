@@ -122,6 +122,11 @@ public abstract class Piece implements Writable {
     public boolean getFirstMove() {
         return firstMove;
     }
+
+    // EFFECTS: Sets the first move value to be either true or false
+    public void setFirstMove(boolean b) {
+        this.firstMove = b;
+    }
 }
 
 
