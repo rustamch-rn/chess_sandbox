@@ -196,6 +196,19 @@ public class PieceTest {
     assertFalse(p.makeMove(6, 0));
     }
 
+    @Test
+    public void shortCastleTestF11() {
+        p = new King(true, 4, 0, bd);
+        Piece rw = new Rook(true, 7, 0, bd);
+        Piece rb1 = new Rook(false, 5, 7, bd);
+        Piece rb2 = new Rook(false, 4, 7, bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(rw, 7, 0);
+        bd.setTile(rb1,5,7);
+        bd.setTile(rb2,4,7);
+        assertFalse(p.makeMove(6, 0));
+    }
+
 
     @Test
     public void longCastleTestSucc() {
@@ -320,6 +333,47 @@ public class PieceTest {
         bd.setTile(p, 4, 0);
         bd.setTile(r, 0, 0);
         bd.setTile(qb,1,7);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF12() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece rb1 = new Rook(false,1,7,bd);
+        Piece rb2 = new Rook(false,2,7,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(rb1,1,7);
+        bd.setTile(rb2,2,7);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF13() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece rb1 = new Rook(false,3,7,bd);
+        Piece rb2 = new Rook(false,2,7,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(rb1,3,7);
+        bd.setTile(rb2,2,7);
+        assertFalse(p.makeMove(1, 0));
+    }
+
+    @Test
+    public void longCastleTestF14() {
+        p = new King(true, 4, 0, bd);
+        Piece r = new Rook(true, 0, 0, bd);
+        Piece rb1 = new Rook(false,3,7,bd);
+        Piece rb2 = new Rook(false,2,7,bd);
+        Piece rb3 = new Rook(false,4,7,bd);
+        bd.setTile(p, 4, 0);
+        bd.setTile(r, 0, 0);
+        bd.setTile(rb1,3,7);
+        bd.setTile(rb2,2,7);
+        bd.setTile(rb3,4,7);
         assertFalse(p.makeMove(1, 0));
     }
 
