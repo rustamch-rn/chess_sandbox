@@ -32,7 +32,6 @@ public class Pawn extends Piece {
     //         otherwise checks for 1 square moves, if given destination square is unreachable produces false
     private boolean pawnMoveBlack(int destX, int destY) {
         if (destY - posY > -3 && firstMove && destX == posX && destY - posY < 0) {
-            firstMove = false;
             return forwardMove(destX,destY);
         } else if (destX == posX && destY - posY == -1) {
             return forwardMove(destX,destY);
@@ -47,7 +46,6 @@ public class Pawn extends Piece {
     //         otherwise checks for 1 square moves, if given destination square is unreachable produces false
     private boolean pawnMoveWhite(int destX, int destY) {
         if (destY - posY < 3 && firstMove && destX == posX && destY - posY > 0) {
-            firstMove = false;
             return forwardMove(destX,destY);
         } else if (destX == posX && destY - posY == 1) {
             return forwardMove(destX,destY);
@@ -64,11 +62,12 @@ public class Pawn extends Piece {
         if (bd.getTile(destX,destY) == null) {
             return false;
         } else if  (destY == 0) {
-            Piece p = new Queen(false, destX, destY, bd);
             bd.takePiece(destX,destY);
+            Piece p = new Queen(false, destX, destY, bd);
             bd.setTile(p, destX, destY);
             return true;
         } else if  (destY == 7) {
+            bd.takePiece(destX,destY);
             Piece p = new Queen(true, destX, destY, bd);
             bd.setTile(p, destX, destY);
             return true;

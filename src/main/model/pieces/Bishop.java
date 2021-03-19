@@ -12,7 +12,7 @@ public class Bishop extends Piece {
         super(pieceColor,posX,posY,bd,IDENTIFIER);
     }
 
-
+    //EFFECTS: Constructs a new Bishop
     public Bishop(boolean pieceColor, int posX, int posY) {
         super(pieceColor,posX,posY,IDENTIFIER);
     }

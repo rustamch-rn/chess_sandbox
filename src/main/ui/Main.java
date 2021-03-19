@@ -6,6 +6,6 @@ public class Main {
 
     // EFFECTS: The game is initiated
     public static void main(String[] args) {
-        new GameMenu();
+        new ChessMenuGUI();
     }
 }

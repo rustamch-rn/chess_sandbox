@@ -9,6 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
+
+/**
+ * JSON writer
+ */
 public class JsonWriter {
 
     private static final int TAB = 4;

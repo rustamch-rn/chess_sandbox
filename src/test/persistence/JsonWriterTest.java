@@ -19,7 +19,7 @@ public class JsonWriterTest {
             Board bd = new Board();
             Player testPl1 = new Player(true,bd,"TestPlayer1");
             Player testPl2 = new Player(false,bd,"TestPlayer2");
-            Game game = new Game("GameTest",bd,testPl1,testPl2);
+            Game game = new Game("GameTest",bd,testPl1,testPl2,true);
             JsonWriter writer = new JsonWriter("./data/testGame.json");
             writer.open();
             writer.write(game);

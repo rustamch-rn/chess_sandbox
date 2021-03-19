@@ -70,7 +70,8 @@ public class JsonReader {
         board.piecesSetBoard();
         Player pl1 = parsePlayer(player1,board);
         Player pl2 = parsePlayer(player2,board);
-        Game g = new Game(name,board, pl1, pl2);
+        boolean playerToMove = jsonObject.getBoolean("playerToMove");
+        Game g = new Game(name,board, pl1, pl2, playerToMove);
         return g;
     }
 

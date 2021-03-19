@@ -8,6 +8,7 @@
         "pieceColor": false,
         "name": "TestPlayer2"
     },
+    "playerToMove": true,
     "board": {
         "pieces": [
             {

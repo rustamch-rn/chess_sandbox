@@ -22,9 +22,11 @@ public class Knight extends Piece {
     @Override
     public boolean makeMove(int destX, int destY) {
         if (Math.abs(destY - posY) == 2 && Math.abs(destX - posX) == 1) {
-            return bd.checkDestinationSquare(pieceColor, posX, posY, destX, destY);
+            bd.placePieceOnNewSquare(posX, posY, destX, destY);
+            return true;
         } else if (Math.abs(destY - posY) == 1 && Math.abs(destX - posX) == 2) {
-            return bd.checkDestinationSquare(pieceColor, posX, posY, destX, destY);
+            bd.placePieceOnNewSquare(posX, posY, destX, destY);
+            return true;
         } else {
             return false;
         }

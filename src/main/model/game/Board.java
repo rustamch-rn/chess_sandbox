@@ -11,12 +11,15 @@ public class Board implements Writable {
     private boolean isOver; // Status of the game
     private final Piece[][] tiles; // All the tiles on the board
 
+
+    // EFFECTS : Constructs a new board
     public Board() {
-        this.tiles = new Piece[8][8]; //
+        this.tiles = new Piece[8][8];
         isOver = false;
         addPieces();
     }
 
+    // EFFECTS : Constructs a new board
     public Board(Piece[][] tiles, boolean status) {
         this.tiles = tiles;
         this.isOver = status;
@@ -65,12 +68,6 @@ public class Board implements Writable {
         return tiles;
     }
 
-    //MODIFIES: This
-    //EFFECTS: Sets the current game to be over
-    public void setOver() {
-        isOver = true;
-    }
-
     // EFFECTS : checks if there is a piece of a given color on the given square
     public boolean checkTile(boolean playerPieceColor, int posX, int posY) {
         if (tiles[posY][posX] != null) {
@@ -80,27 +77,35 @@ public class Board implements Writable {
         return false;
     }
 
-    // REQUIRES: starting position should contain a piece of player's color
+    // REQUIRES : Selected square should be a valid square on the board that contains a piece
     // MODIFIES: This
     // EFFECTS : Produces false if move is illegal, otherwise makes a move and produces true
-    public boolean checkMoveRules(int origX, int origY, int destX, int destY) {
-        Piece p = tiles[origY][origX];
-        if (p.makeMove(destX, destY)) {
-            removePiece(origX, origY);
+    public boolean checkMoveRules(boolean pieceColor, int origX, int origY, int destX, int destY) {
+        Piece selectedPiece = tiles[origY][origX];
+        Piece destSquare = tiles[destY][destX];
+        if (selectedPiece.getPieceColor() != pieceColor) {
+            return false;
+        } else if (destSquare != null && destSquare.getPieceColor() == selectedPiece.getPieceColor()) {
+            return false;
+        } else if (selectedPiece.makeMove(destX, destY)) {
+            placePieceOnNewSquare(origX,origY,destX,destY);
+            removePiece(origX,origY);
+            selectedPiece.setFirstMove(false);
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure vertically forward,
-    //         if nothing is restricting movement of the piece to destination square plays the move
-    public boolean verticalForwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    //         if nothing is restricting movement of the piece returns true
+    public boolean verticalForwardMove(int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY + count <= 7) {
             Piece currentSquare = tiles[origY + count][origX];
             if (origY + count == destY) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -113,13 +118,13 @@ public class Board implements Writable {
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure vertically backward,
-    //         if nothing is restricting movement of the piece to destination square plays the move
+    //         if nothing is restricting movement of the piece returns true
     public boolean verticalBackwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY - count >= 0) {
             Piece currentSquare = tiles[origY - count][origX];
             if (origY - count == destY) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -131,13 +136,13 @@ public class Board implements Writable {
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure horizontally rightward ,
-    //         if nothing is restricting movement of the piece to destination square plays the move
-    public boolean horizontalRightwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    //         if nothing is restricting movement of the piece returns true
+    public boolean horizontalRightwardMove(int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origX + count <= 7) {
             Piece currentSquare = tiles[origY][origX + count];
             if (origX + count == destX) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -149,13 +154,13 @@ public class Board implements Writable {
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure horizontally rightward,
-    //         if nothing is restricting movement of the piece to destination square plays the move
-    public boolean horizontalLeftwardMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    //         if nothing is restricting movement of the piece returns true
+    public boolean horizontalLeftwardMove(int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origX - count >= 0) {
             Piece currentSquare = tiles[origY][origX - count];
             if (origX - count == destX) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -167,13 +172,13 @@ public class Board implements Writable {
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure diagonally to the top right corner,
-    //         if nothing is restricting movement of the piece to destination square plays the move
-    public boolean diagonalUpRightMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    //         if nothing is restricting movement of the piece returns true
+    public boolean diagonalUpRightMove(int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY + count <= 7 && origX + count <= 7) {
             Piece currentSquare = tiles[origY + count][origX + count];
             if (origY + count == destY && origX + count == destX) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -185,13 +190,13 @@ public class Board implements Writable {
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure diagonally to the top left corner,
-    //         if nothing is restricting movement of the piece to destination square plays the move
-    public boolean diagonalUpLeftMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    //         if nothing is restricting movement of the piece returns true
+    public boolean diagonalUpLeftMove(int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY + count <= 7 && origX - count >= 0) {
             Piece currentSquare = tiles[origY + count][origX - count];
             if (origY + count == destY && origX - count == destX) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -203,13 +208,13 @@ public class Board implements Writable {
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure diagonally to the bottom right corner,
-    //         if nothing is restricting movement of the piece to destination square plays the move
-    public boolean diagonalDownRightMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    //         if nothing is restricting movement of the piece returns true
+    public boolean diagonalDownRightMove(int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY - count >= 0 && origX + count <= 7) {
             Piece currentSquare = tiles[origY - count][origX + count];
             if (origY - count == destY && origX + count == destX) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -221,13 +226,13 @@ public class Board implements Writable {
 
     //REQUIRES: The original square should contain a piece.
     //EFFECTS: Checks if something is restricting movement of the figure diagonally to the bottom left corner,
-    //         if nothing is restricting movement of the piece to destination square plays the move
-    public boolean diagonalDownLeftMove(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    //         if nothing is restricting movement of the piece returns true
+    public boolean diagonalDownLeftMove(int origX, int origY, int destX, int destY) {
         int count = 1;
         while (origY - count >= 0 && origX - count >= 0) {
             Piece currentSquare = tiles[origY - count][origX - count];
             if (origY - count == destY && origX - count == destX) {
-                return checkDestinationSquare(pieceColor, origX, origY, destX, destY);
+                return true;
             }
             if (checkConflictingPieces(currentSquare)) {
                 return false;
@@ -247,23 +252,15 @@ public class Board implements Writable {
     //MODIFIES: This
     //EFFECTS: Checks if piece can occupy destination square, if there is enemy piece on the given square
     //         it is taken
-    public boolean checkDestinationSquare(boolean pieceColor, int origX, int origY, int destX, int destY) {
+    public void placePieceOnNewSquare(int origX, int origY, int destX, int destY) {
         Piece destSquare = tiles[destY][destX];
         Piece selectedPiece = tiles[origY][origX];
-        if (destSquare == null) {
-            selectedPiece.setPosX(destX);
-            selectedPiece.setPosY(destY);
-            tiles[destY][destX] = selectedPiece;
-            return true;
-        } else if (destSquare.getPieceColor() == pieceColor) {
-            return false;
-        } else {
+        if (destSquare != null) {
             takePiece(destX, destY);
-            selectedPiece.setPosX(destX);
-            selectedPiece.setPosY(destY);
-            tiles[destY][destX] = selectedPiece;
-            return true;
         }
+        selectedPiece.setPosX(destX);
+        selectedPiece.setPosY(destY);
+        tiles[destY][destX] = selectedPiece;
 
     }
 
@@ -274,7 +271,7 @@ public class Board implements Writable {
     public void takePiece(int posX, int posY) {
         Piece p = tiles[posY][posX];
         if ('K' == p.getIdentifier()) {
-            setOver();
+            setStatus(true);
         }
         removePiece(posX, posY);
     }
@@ -291,100 +288,22 @@ public class Board implements Writable {
         return tiles[posY][posX];
     }
 
-    // EFFECTS: Prints a basic visual representation of the board
-    public void printBoard() {
-        int row = 1;
-        for (int i = 7; i >= 0; i--) {
-            System.out.println();
-            System.out.print((row + i) + " ");
-            for (int j = 0; j <= 7; j++) {
-                Piece p = getTile(j, i);
-                if (p == null) {
-                    System.out.print("____|");
-                } else if (p.getPieceColor()) {
-                    char id = p.getIdentifier();
-                    printWhitePieces(id);
-                } else {
-                    char id = p.getIdentifier();
-                    printBlackPieces(id);
-                }
-            }
-        }
-        System.out.println();
-        printLetters();
-        System.out.println();
-    }
-
-    // EFFECTS: Prints letter for a responding column on the board
-    private void printLetters() {
-        System.out.print(" ");
-        String letters = "ABCDEFGH";
-        for (int i = 0; i <= 7; i++) {
-            System.out.print("  " + letters.charAt(i) + "  ");
-        }
-    }
-
-    //REQUIRES: The id of piece should be an id of a white piece
-    //EFFECTS: Produces texts that represent a figure which depend a type of piece
-    private void printWhitePieces(char id) {
-        switch (id) {
-            case 'K':
-                System.out.print("_WK_|");
-                break;
-            case 'Q':
-                System.out.print("_WQ_|");
-                break;
-            case 'N':
-                System.out.print("_WN_|");
-                break;
-            case 'B':
-                System.out.print("_WB_|");
-                break;
-            case 'R':
-                System.out.print("_WR_|");
-                break;
-            default:
-                System.out.print("_WP_|");
-        }
-    }
-
-    //REQUIRES: The id of piece should be an id of a black piece
-    //EFFECTS: Produces texts that represent a figure which depend a type of piece
-    private void printBlackPieces(char id) {
-        switch (id) {
-            case 'K':
-                System.out.print("_BK_|");
-                break;
-            case 'Q':
-                System.out.print("_BQ_|");
-                break;
-            case 'N':
-                System.out.print("_BN_|");
-                break;
-            case 'B':
-                System.out.print("_BB_|");
-                break;
-            case 'R':
-                System.out.print("_BR_|");
-                break;
-            default:
-                System.out.print("_BP_|");
-        }
-    }
 
     //MODIFIES: This
     //EFFECTS: Produces true if the given square is under attack, false otherwise
     public boolean checkUnderAttack(boolean pieceColor, int destX, int destY) {
+        Piece destSquare = getTile(destX,destY);
         for (Piece[] row : tiles) {
             for (Piece p : row) {
                 if (p != null && p.getPieceColor() != pieceColor) {
                     int origX = p.getPosX();
                     int origY = p.getPosY();
                     boolean firstMove = p.getFirstMove();
-                    if (p.makeMove(destX, destY)) {
-                        removePiece(destX, destY);
+                    if ((p.getIdentifier() != 'K' || !p.getFirstMove()) && p.makeMove(destX, destY)) {
+                        setTile(destSquare,destX,destY);
                         p.setPosX(origX);
                         p.setPosY(origY);
+                        setStatus(false);
                         p.setFirstMove(firstMove);
                         return true;
                     }
@@ -395,14 +314,22 @@ public class Board implements Writable {
         return false;
     }
 
+    public void setStatus(boolean b) {
+        this.isOver = b;
+    }
+
+
+    // EFFECTS : Creates a json object from this game
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("status",isOver);
+        json.put("status", isOver);
         json.put("pieces", piecesToJson());
         return json;
     }
 
+
+    // EFFECTS : Creates a json array that contains information about all the tiles on the board
     private JSONArray piecesToJson() {
         JSONArray jsonArray = new JSONArray();
         for (Piece[] row : tiles) {
@@ -414,7 +341,7 @@ public class Board implements Writable {
                 }
             }
         }
-        return  jsonArray;
+        return jsonArray;
     }
 
     // EFFECTS: Sets the board of the piece to this board

@@ -70,13 +70,13 @@ public abstract class Piece implements Writable {
         if (Math.abs(destX - posX) != Math.abs(destY - posY)) {
             return false;
         } else if (destX > posX && destY > posY) {
-            return bd.diagonalUpRightMove(pieceColor,posX,posY,destX,destY);
+            return bd.diagonalUpRightMove(posX,posY,destX,destY);
         } else if (destX < posX && destY > posY) {
-            return bd.diagonalUpLeftMove(pieceColor,posX,posY,destX,destY);
+            return bd.diagonalUpLeftMove(posX,posY,destX,destY);
         } else if (destX > posX) {
-            return bd.diagonalDownRightMove(pieceColor,posX,posY,destX,destY);
+            return bd.diagonalDownRightMove(posX,posY,destX,destY);
         } else {
-            return bd.diagonalDownLeftMove(pieceColor, posX, posY, destX, destY);
+            return bd.diagonalDownLeftMove(posX, posY, destX, destY);
         }
     }
 
@@ -86,13 +86,13 @@ public abstract class Piece implements Writable {
         if (destX != posX && destY != posY) {
             return false;
         } else if (destY > posY) {
-            return bd.verticalForwardMove(pieceColor,posX,posY,destX,destY);
+            return bd.verticalForwardMove(posX,posY,destX,destY);
         } else if (destY < posY) {
             return bd.verticalBackwardMove(pieceColor,posX,posY,destX,destY);
         } else  if (destX > posX) {
-            return bd.horizontalRightwardMove(pieceColor,posX,posY,destX,destY);
+            return bd.horizontalRightwardMove(posX,posY,destX,destY);
         }  else {
-            return bd.horizontalLeftwardMove(pieceColor, posX, posY, destX, destY);
+            return bd.horizontalLeftwardMove(posX, posY, destX, destY);
         }
     }
 

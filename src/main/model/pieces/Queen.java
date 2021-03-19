@@ -23,7 +23,7 @@ public class Queen extends Piece {
     //         return true, false otherwise
     @Override
     public boolean makeMove(int destX, int destY) {
-        if (destX == posX || destY == posY) {
+        if (destX == posX ^ destY == posY) {
             return moveInStraightLine(destX,destY);
         } else {
             return moveDiagonally(destX,destY);
