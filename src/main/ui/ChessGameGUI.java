@@ -14,9 +14,10 @@ import java.util.List;
  */
 public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionListener {
 
-    private static final int FRAME_WIDTH = 800; // Width of the frame
+    private static final int BOARD_WIDTH = 800; // Width of the frame
     private static final int BOARD_HEIGHT = 800; // Height of the board
     private static final int MENUBAR_HEIGHT = 20; // Height of the menu bar
+    private static final int LABEL_HEIGHT = 40; // Height of the menu bar
 
     private Game gameDisplayed; // The game displayed on the screen
     private List<String> gameNames; // List the names of the currently existing games
@@ -43,6 +44,8 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
+
+
     // MODIFIES : This
     // EFFECTS : Creates a new chess board
     private void createChessBoard() {
@@ -51,11 +54,17 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
         layeredPane.addMouseListener(this);
         layeredPane.addMouseMotionListener(this);
         chessBoard = new JPanel();
-        chessBoard.setPreferredSize(new Dimension(FRAME_WIDTH, BOARD_HEIGHT));
+        chessBoard.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
+        JLabel jbl1 = new JLabel("<html><H1>" + gameDisplayed.getPlayer1().getName() + "</H1>");
+        JLabel jbl2 = new JLabel("<html><H1>" + gameDisplayed.getPlayer2().getName() + "</H1>");
+        layeredPane.add(jbl1,JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(jbl2,JLayeredPane.DEFAULT_LAYER);
+        jbl1.setBounds(0,MENUBAR_HEIGHT, BOARD_WIDTH, LABEL_HEIGHT);
+        jbl2.setBounds(0,LABEL_HEIGHT + BOARD_HEIGHT + MENUBAR_HEIGHT, BOARD_WIDTH, LABEL_HEIGHT);
         layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
         chessBoard.setLayout(new GridLayout(8, 8));
-        chessBoard.setPreferredSize(new Dimension(FRAME_WIDTH, BOARD_HEIGHT));
-        chessBoard.setBounds(0, 20, FRAME_WIDTH, BOARD_HEIGHT);
+        chessBoard.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
+        chessBoard.setBounds(0, LABEL_HEIGHT + MENUBAR_HEIGHT, BOARD_WIDTH, BOARD_HEIGHT);
     }
 
     // MODIFIES: This
@@ -67,7 +76,7 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
                 parentFrame.setVisible(true);
             }
         });
-        this.setPreferredSize(new Dimension(FRAME_WIDTH, BOARD_HEIGHT + MENUBAR_HEIGHT));
+        this.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT + MENUBAR_HEIGHT + 2 * LABEL_HEIGHT));
         this.setResizable(false);
     }
 
@@ -75,7 +84,7 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
     // EFFECTS: Creates a menubar and adds the save button
     private void createMenuBar() {
         menuBar = new JMenuBar();
-        menuBar.setBounds(0,0, FRAME_WIDTH, MENUBAR_HEIGHT);
+        menuBar.setBounds(0,0, BOARD_WIDTH, MENUBAR_HEIGHT);
         getContentPane().add(menuBar);
         JButton saveButton = new JButton("Save");
         saveButton.addActionListener(new SaveGameAction(gameDisplayed,gameNames));
@@ -153,13 +162,27 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
             } else if (j % 2 == 1) {
                 startingTileColor = true;
             }
-            for (int i = 0; i < 8; i++) {
-                JPanel square = new JPanel(new BorderLayout());
-                chessBoard.add(square);
-                if (startingTileColor == true) {
-                    square.setBackground(i % 2 == 0 ? Color.blue : Color.white);
+            chooseSquareColor(startingTileColor);
+        }
+    }
+
+    // MODIFIES : This
+    // EFFECTS : Chooses the color for a given square
+    private void chooseSquareColor(boolean startingTileColor) {
+        for (int i = 0; i < 8; i++) {
+            JPanel square = new JPanel(new BorderLayout());
+            chessBoard.add(square);
+            if (startingTileColor == true) {
+                if (i % 2 == 0) {
+                    square.setBackground(new Color(0, 130, 206));
                 } else {
-                    square.setBackground(i % 2 == 0 ? Color.white : Color.blue);
+                    square.setBackground(new Color(255, 255, 255));
+                }
+            } else {
+                if (i % 2 == 0) {
+                    square.setBackground(new Color(255, 255, 255));
+                } else {
+                    square.setBackground(new Color(0, 130, 206));
                 }
             }
         }
@@ -185,7 +208,7 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
     //           selected already
     @Override
     public void mousePressed(MouseEvent e) {
-        int y = ((MENUBAR_HEIGHT + BOARD_HEIGHT) - e.getY()) / 100;
+        int y = ((MENUBAR_HEIGHT + BOARD_HEIGHT + LABEL_HEIGHT) - e.getY()) / 100;
         int x = e.getX() / 100;
         if (gameDisplayed.checkPieceSelection(x, y) == false || pieceSelected == true) {
             this.pieceSelected = false;
@@ -202,7 +225,7 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
     @Override
     public void mouseReleased(MouseEvent e) {
         if (pieceSelected) {
-            int y = ((MENUBAR_HEIGHT + BOARD_HEIGHT) - e.getY()) / 100;
+            int y = ((MENUBAR_HEIGHT + BOARD_HEIGHT + LABEL_HEIGHT) - e.getY()) / 100;
             int x = e.getX() / 100;
             if (gameDisplayed.makeMove(pieceX, pieceY, x, y)) {
                 pieceSelected = false;

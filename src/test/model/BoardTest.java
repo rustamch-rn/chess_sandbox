@@ -17,7 +17,7 @@ class BoardTest {
     public void setup() {
         b1 = new Board();
         b2 = new Board();
-        Piece[][] tiles = b2.getTiles();
+        b2.getTiles();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 b2.removePiece(j,i);
@@ -251,7 +251,7 @@ class BoardTest {
     @Test
     void testStatusSetting(){
         b1.setStatus(true);
-        assertEquals(true,b1.getStatus());
+        assertTrue(b1.getStatus());
     }
 
     @Test
@@ -263,14 +263,14 @@ class BoardTest {
         b2.setTile(p2,0,0);
         b2.setTile(p3,7,0);
         b2.takePiece(0,7);
-        assertEquals(null,b2.getTile(0,7));
-        assertEquals(false,b2.getStatus());
+        assertNull(b2.getTile(0, 7));
+        assertFalse(b2.getStatus());
         b2.takePiece(0,0);
-        assertEquals(null,b2.getTile(0,0));
-        assertEquals(true,b2.getStatus());
+        assertNull(b2.getTile(0, 0));
+        assertTrue(b2.getStatus());
         b2.takePiece(7,0);
-        assertEquals(null,b2.getTile(7,0));
-        assertEquals(true,b2.getStatus());
+        assertNull(b2.getTile(7, 0));
+        assertTrue(b2.getStatus());
     }
 
     @Test

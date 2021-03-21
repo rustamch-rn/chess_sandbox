@@ -38,12 +38,18 @@ public class NewGameAction implements ActionListener {
     // EFFECTS : Gets the name of the player with black pieces from user's input
     private String getPlayer2Name() {
         String playerName = JOptionPane.showInputDialog("What is the name of the player playing with black pieces?");
+        while (playerName == null) {
+            playerName = JOptionPane.showInputDialog("Please enter a valid name!");
+        }
         return playerName;
     }
 
     // EFFECTS : Gets the name of the player with white pieces from user's input
     private String getPlayer1Name() {
         String playerName = JOptionPane.showInputDialog("What is the name of the player playing with white pieces?");
+        while (playerName == null) {
+            playerName = JOptionPane.showInputDialog("Please enter a valid name!");
+        }
         return playerName;
     }
 
@@ -51,7 +57,7 @@ public class NewGameAction implements ActionListener {
     //           continues to require user's input
     private String getGameName() {
         String gameName = JOptionPane.showInputDialog("How do you want to name this game?");
-        while (gameNames.contains(gameName)) {
+        while (gameNames.contains(gameName) || gameName == null) {
             gameName = JOptionPane.showInputDialog("Game with this name exists already, please enter a different name");
         }
         return gameName;
