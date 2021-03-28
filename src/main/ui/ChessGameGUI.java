@@ -30,7 +30,7 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
     private JMenuBar menuBar; // Menu bar that contains tall the buttons
 
     // EFFECTS : Constructs a new game
-    public ChessGameGUI(Game g, List<String> gameNames,JFrame parentFrame) {
+    public ChessGameGUI(Game g, List<String> gameNames, JFrame parentFrame) {
         this.parentFrame = parentFrame;
         this.gameDisplayed = g;
         this.gameNames = gameNames;
@@ -45,7 +45,6 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
     }
 
 
-
     // MODIFIES : This
     // EFFECTS : Creates a new chess board
     private void createChessBoard() {
@@ -55,12 +54,12 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
         layeredPane.addMouseMotionListener(this);
         chessBoard = new JPanel();
         chessBoard.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
-        JLabel jbl1 = new JLabel("<html><H1>" + gameDisplayed.getPlayer1().getName() + "</H1>");
-        JLabel jbl2 = new JLabel("<html><H1>" + gameDisplayed.getPlayer2().getName() + "</H1>");
-        layeredPane.add(jbl1,JLayeredPane.DEFAULT_LAYER);
-        layeredPane.add(jbl2,JLayeredPane.DEFAULT_LAYER);
-        jbl1.setBounds(0,MENUBAR_HEIGHT, BOARD_WIDTH, LABEL_HEIGHT);
-        jbl2.setBounds(0,LABEL_HEIGHT + BOARD_HEIGHT + MENUBAR_HEIGHT, BOARD_WIDTH, LABEL_HEIGHT);
+        JLabel jbl1 = new JLabel("<html><H1>" + gameDisplayed.getPlayer2().getName() + "</H1>");
+        JLabel jbl2 = new JLabel("<html><H1>" + gameDisplayed.getPlayer1().getName() + "</H1>");
+        layeredPane.add(jbl1, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(jbl2, JLayeredPane.DEFAULT_LAYER);
+        jbl1.setBounds(0, MENUBAR_HEIGHT, BOARD_WIDTH, LABEL_HEIGHT);
+        jbl2.setBounds(0, LABEL_HEIGHT + BOARD_HEIGHT + MENUBAR_HEIGHT, BOARD_WIDTH, LABEL_HEIGHT);
         layeredPane.add(chessBoard, JLayeredPane.DEFAULT_LAYER);
         chessBoard.setLayout(new GridLayout(8, 8));
         chessBoard.setPreferredSize(new Dimension(BOARD_WIDTH, BOARD_HEIGHT));
@@ -84,10 +83,10 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
     // EFFECTS: Creates a menubar and adds the save button
     private void createMenuBar() {
         menuBar = new JMenuBar();
-        menuBar.setBounds(0,0, BOARD_WIDTH, MENUBAR_HEIGHT);
+        menuBar.setBounds(0, 0, BOARD_WIDTH, MENUBAR_HEIGHT);
         getContentPane().add(menuBar);
         JButton saveButton = new JButton("Save");
-        saveButton.addActionListener(new SaveGameAction(gameDisplayed,gameNames));
+        saveButton.addActionListener(new SaveGameAction(gameDisplayed, gameNames));
         menuBar.add(saveButton);
 
     }
@@ -198,6 +197,7 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
     }
 
 
+    // DO NOTHING!
     @Override
     public void mouseClicked(MouseEvent e) {
     }
@@ -228,30 +228,38 @@ public class ChessGameGUI extends JDialog implements MouseListener, MouseMotionL
             int y = ((MENUBAR_HEIGHT + BOARD_HEIGHT + LABEL_HEIGHT) - e.getY()) / 100;
             int x = e.getX() / 100;
             if (gameDisplayed.makeMove(pieceX, pieceY, x, y)) {
-                pieceSelected = false;
                 if (gameDisplayed.getBoardStatus()) {
                     JOptionPane.showMessageDialog(null, gameDisplayed.producePlayerWonMessage());
                 }
             }
         }
+        pieceSelected = false;
         drawGame();
     }
 
+
+    // DO NOTHING!
     @Override
     public void mouseEntered(MouseEvent e) {
 
     }
 
+
+    // DO NOTHING!
     @Override
     public void mouseExited(MouseEvent e) {
 
     }
 
+
+    // DO NOTHING!
     @Override
     public void mouseDragged(MouseEvent e) {
 
     }
 
+
+    // DO NOTHING!
     @Override
     public void mouseMoved(MouseEvent e) {
 

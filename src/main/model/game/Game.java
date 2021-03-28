@@ -1,6 +1,5 @@
 package model.game;
 
-import com.sun.org.apache.xerces.internal.dom.AbortException;
 import model.pieces.Piece;
 import org.json.JSONObject;
 import persistence.Writable;
@@ -24,7 +23,7 @@ public class Game implements Writable {
     }
 
     // EFFECTS: Initialises the scanner and starts the game
-    public Game(String gameName, Board bd, Player pl1, Player pl2,boolean playerToMove) {
+    public Game(String gameName, Board bd, Player pl1, Player pl2, boolean playerToMove) {
         this.gameName = gameName;
         this.bd = bd;
         this.pl1 = pl1;
@@ -41,7 +40,7 @@ public class Game implements Writable {
         json.put("board", bd.toJson());
         json.put("player1", pl1.toJson());
         json.put("player2", pl2.toJson());
-        json.put("playerToMove",playerToMove);
+        json.put("playerToMove", playerToMove);
         return json;
     }
 
@@ -119,15 +118,19 @@ public class Game implements Writable {
         }
     }
 
+    // MODIFIES : This
     // EFFECTS : Sets which player is to move
     public void setPlayerToMove(boolean b) {
         this.playerToMove = b;
     }
 
+    // EFFECTS : Returns the player to move
     public boolean getPlayerToMove() {
         return playerToMove;
     }
 
+    // MODIFIES : This
+    // EFFECTS : Sets the status of the game
     public void setStatus(boolean b) {
         this.bd.setStatus(b);
     }

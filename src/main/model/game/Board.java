@@ -88,8 +88,8 @@ public class Board implements Writable {
         } else if (destSquare != null && destSquare.getPieceColor() == selectedPiece.getPieceColor()) {
             return false;
         } else if (selectedPiece.makeMove(destX, destY)) {
-            placePieceOnNewSquare(origX,origY,destX,destY);
-            removePiece(origX,origY);
+            placePieceOnNewSquare(origX, origY, destX, destY);
+            removePiece(origX, origY);
             selectedPiece.setFirstMove(false);
             return true;
         } else {
@@ -292,7 +292,7 @@ public class Board implements Writable {
     //MODIFIES: This
     //EFFECTS: Produces true if the given square is under attack, false otherwise
     public boolean checkUnderAttack(boolean pieceColor, int destX, int destY) {
-        Piece destSquare = getTile(destX,destY);
+        Piece destSquare = getTile(destX, destY);
         for (Piece[] row : tiles) {
             for (Piece p : row) {
                 if (p != null && p.getPieceColor() != pieceColor) {
@@ -300,7 +300,7 @@ public class Board implements Writable {
                     int origY = p.getPosY();
                     boolean firstMove = p.getFirstMove();
                     if ((p.getIdentifier() != 'K' || !p.getFirstMove()) && p.makeMove(destX, destY)) {
-                        setTile(destSquare,destX,destY);
+                        setTile(destSquare, destX, destY);
                         p.setPosX(origX);
                         p.setPosY(origY);
                         setStatus(false);

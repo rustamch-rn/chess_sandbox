@@ -16,7 +16,7 @@ public abstract class Piece implements Writable {
 
 
     //EFFECTS: Constructs a new piece
-    protected Piece(boolean pieceColor,int posX,int posY,Board bd, char identifier) {
+    protected Piece(boolean pieceColor, int posX, int posY, Board bd, char identifier) {
         this.pieceColor = pieceColor;
         this.posX = posX;
         this.posY = posY;
@@ -25,7 +25,7 @@ public abstract class Piece implements Writable {
         this.firstMove = true;
     }
 
-    protected Piece(boolean pieceColor,int posX,int posY, char identifier) {
+    protected Piece(boolean pieceColor, int posX, int posY, char identifier) {
         this.pieceColor = pieceColor;
         this.posX = posX;
         this.posY = posY;
@@ -70,11 +70,11 @@ public abstract class Piece implements Writable {
         if (Math.abs(destX - posX) != Math.abs(destY - posY)) {
             return false;
         } else if (destX > posX && destY > posY) {
-            return bd.diagonalUpRightMove(posX,posY,destX,destY);
+            return bd.diagonalUpRightMove(posX, posY, destX, destY);
         } else if (destX < posX && destY > posY) {
-            return bd.diagonalUpLeftMove(posX,posY,destX,destY);
+            return bd.diagonalUpLeftMove(posX, posY, destX, destY);
         } else if (destX > posX) {
-            return bd.diagonalDownRightMove(posX,posY,destX,destY);
+            return bd.diagonalDownRightMove(posX, posY, destX, destY);
         } else {
             return bd.diagonalDownLeftMove(posX, posY, destX, destY);
         }
@@ -86,12 +86,12 @@ public abstract class Piece implements Writable {
         if (destX != posX && destY != posY) {
             return false;
         } else if (destY > posY) {
-            return bd.verticalForwardMove(posX,posY,destX,destY);
+            return bd.verticalForwardMove(posX, posY, destX, destY);
         } else if (destY < posY) {
-            return bd.verticalBackwardMove(pieceColor,posX,posY,destX,destY);
-        } else  if (destX > posX) {
-            return bd.horizontalRightwardMove(posX,posY,destX,destY);
-        }  else {
+            return bd.verticalBackwardMove(pieceColor, posX, posY, destX, destY);
+        } else if (destX > posX) {
+            return bd.horizontalRightwardMove(posX, posY, destX, destY);
+        } else {
             return bd.horizontalLeftwardMove(posX, posY, destX, destY);
         }
     }
@@ -110,11 +110,11 @@ public abstract class Piece implements Writable {
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("pieceColor",pieceColor);
-        jsonObject.put("posX",posX);
-        jsonObject.put("posY",posY);
-        jsonObject.put("firstMove",firstMove);
-        jsonObject.put("identifier",identifier);
+        jsonObject.put("pieceColor", pieceColor);
+        jsonObject.put("posX", posX);
+        jsonObject.put("posY", posY);
+        jsonObject.put("firstMove", firstMove);
+        jsonObject.put("identifier", identifier);
         return jsonObject;
     }
 

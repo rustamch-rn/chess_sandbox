@@ -10,11 +10,11 @@ public class Knight extends Piece {
 
 
     public Knight(boolean pieceColor, int posX, int posY, Board bd) {
-        super(pieceColor,posX,posY,bd,IDENTIFIER);
+        super(pieceColor, posX, posY, bd, IDENTIFIER);
     }
 
     public Knight(boolean pieceColor, int posX, int posY) {
-        super(pieceColor,posX,posY,IDENTIFIER);
+        super(pieceColor, posX, posY, IDENTIFIER);
     }
 
     //EFFECTS: Moves a Knight to destination square if it there exists a legal move that would move knight there,

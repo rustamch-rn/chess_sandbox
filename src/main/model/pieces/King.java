@@ -58,7 +58,7 @@ public class King extends Piece {
         }
         Piece q = bd.getTile(posX - 1, destY);
         Piece b = bd.getTile(posX - 2, destY);
-        Piece n = bd.getTile(posX - 3,destY);
+        Piece n = bd.getTile(posX - 3, destY);
         Piece rook = bd.getTile(posX - 4, destY);
         if (rook == null) {
             return false;

@@ -11,11 +11,11 @@ public class Queen extends Piece {
 
     //EFFECTS: Constructs a new Queen
     public Queen(boolean pieceColor, int posX, int posY, Board bd) {
-        super(pieceColor,posX,posY,bd,IDENTIFIER);
+        super(pieceColor, posX, posY, bd, IDENTIFIER);
     }
 
     public Queen(boolean pieceColor, int posX, int posY) {
-        super(pieceColor,posX,posY,IDENTIFIER);
+        super(pieceColor, posX, posY, IDENTIFIER);
     }
 
 
@@ -24,9 +24,9 @@ public class Queen extends Piece {
     @Override
     public boolean makeMove(int destX, int destY) {
         if (destX == posX ^ destY == posY) {
-            return moveInStraightLine(destX,destY);
+            return moveInStraightLine(destX, destY);
         } else {
-            return moveDiagonally(destX,destY);
+            return moveDiagonally(destX, destY);
         }
     }
 }

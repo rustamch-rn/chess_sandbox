@@ -20,13 +20,13 @@ public class LoadGameAction implements ActionListener {
 
     private static final String JSON_DIRECTORY = "./data/"; // General directory of all save files
     private static List<String> gameNames; // Names of the games that were already loaded 
-    
+
     private final JFrame parentFrame; // Main window frame
     private JDialog frame; // Frame that contains all the games that user
     private JPanel contentPanel; // Panel with all the screen contests
 
     // EFFECTS : Constructs a new load game action listener
-    public LoadGameAction(JFrame parentFrame,List<String> gameNames) {
+    public LoadGameAction(JFrame parentFrame, List<String> gameNames) {
         this.parentFrame = parentFrame;
         LoadGameAction.gameNames = gameNames;
         contentPanel = new JPanel();
@@ -47,10 +47,10 @@ public class LoadGameAction implements ActionListener {
     // EFFECTS : Constructs a panel with buttons that have names of already existing games
     private JPanel createSaveFilePanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(gameNames.size(),1));
+        buttonPanel.setLayout(new GridLayout(gameNames.size(), 1));
         for (String str : gameNames) {
             JButton jbutton = new JButton(str);
-            jbutton.setPreferredSize(new Dimension(frame.getWidth(),100));
+            jbutton.setSize(new Dimension(frame.getWidth(), 100));
             jbutton.addActionListener(new LoadGameName(jbutton));
             buttonPanel.add(jbutton);
         }
@@ -78,7 +78,7 @@ public class LoadGameAction implements ActionListener {
 
 
     /**
-     *  Action listener that loads game with name of the button on click
+     * Action listener that loads game with name of the button on click
      */
     private class LoadGameName implements ActionListener {
 
@@ -102,7 +102,7 @@ public class LoadGameAction implements ActionListener {
                 ioException.printStackTrace();
             }
             frame.dispose();
-            new ChessGameGUI(g,gameNames,parentFrame);
+            new ChessGameGUI(g, gameNames, parentFrame);
         }
 
         // EFFECTS: Loads a game with a given name

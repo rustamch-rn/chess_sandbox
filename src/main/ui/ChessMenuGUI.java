@@ -26,7 +26,6 @@ public class ChessMenuGUI extends JFrame {
     private List<String> gameNames; // Names of already existing games
 
 
-
     // EFFECTS: Constructs a new game menu
     public ChessMenuGUI() {
         initialiseFields();
@@ -43,13 +42,13 @@ public class ChessMenuGUI extends JFrame {
         JPanel contentPanel = new JPanel();
         contentPanel.setBorder(BorderFactory.createEmptyBorder(50, 100, 200, 100));
         JLabel label = new JLabel("<html><H1>Chess</H1></html>");
-        contentPanel.setLayout(new GridLayout(0,1,0,50));
+        contentPanel.setLayout(new GridLayout(0, 1, 0, 50));
         contentPanel.add(label);
         label.setHorizontalAlignment(JLabel.CENTER);
         JButton newGame = new JButton("Create a new game");
         JButton loadGame = new JButton("Load game");
-        newGame.addActionListener(new NewGameAction(this,gameNames));
-        loadGame.addActionListener(new LoadGameAction(this,gameNames));
+        newGame.addActionListener(new NewGameAction(this, gameNames));
+        loadGame.addActionListener(new LoadGameAction(this, gameNames));
         contentPanel.add(newGame);
         contentPanel.add(loadGame);
         return contentPanel;
@@ -82,7 +81,6 @@ public class ChessMenuGUI extends JFrame {
     private void loadGameNames() throws IOException {
         gameNames = jsonReader.readNames();
     }
-
 
 
 }

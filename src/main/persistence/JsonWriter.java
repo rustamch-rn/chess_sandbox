@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * JSON writer
+ * JSON file writer
  */
 public class JsonWriter {
 

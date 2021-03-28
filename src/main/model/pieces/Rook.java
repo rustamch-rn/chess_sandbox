@@ -9,11 +9,11 @@ public class Rook extends Piece {
 
     //EFFECTS: Constructs a new Rook
     public Rook(boolean pieceColor, int posX, int posY, Board bd) {
-        super(pieceColor,posX,posY,bd,IDENTIFIER);
+        super(pieceColor, posX, posY, bd, IDENTIFIER);
     }
 
     public Rook(boolean pieceColor, int posX, int posY) {
-        super(pieceColor,posX,posY,IDENTIFIER);
+        super(pieceColor, posX, posY, IDENTIFIER);
     }
 
     //EFFECTS: Moves a rook, returns true if rook can be moved legally to the destination square

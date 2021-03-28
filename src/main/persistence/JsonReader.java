@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Reader for JSON files
+ */
 public class JsonReader {
     private String source;
 
@@ -68,10 +71,10 @@ public class JsonReader {
         JSONObject player2 = jsonObject.getJSONObject("player2");
         Board board = parseBoard(bd);
         board.piecesSetBoard();
-        Player pl1 = parsePlayer(player1,board);
-        Player pl2 = parsePlayer(player2,board);
+        Player pl1 = parsePlayer(player1, board);
+        Player pl2 = parsePlayer(player2, board);
         boolean playerToMove = jsonObject.getBoolean("playerToMove");
-        Game g = new Game(name,board, pl1, pl2, playerToMove);
+        Game g = new Game(name, board, pl1, pl2, playerToMove);
         return g;
     }
 
@@ -79,7 +82,7 @@ public class JsonReader {
     private Player parsePlayer(JSONObject player, Board board) {
         String name = player.getString("name");
         boolean pieceColor = player.getBoolean("pieceColor");
-        Player pl = new Player(pieceColor,board,name);
+        Player pl = new Player(pieceColor, board, name);
         return pl;
     }
 
@@ -100,7 +103,7 @@ public class JsonReader {
             }
             count++;
         }
-        Board board = new Board(result,st);
+        Board board = new Board(result, st);
         return board;
     }
 
@@ -110,7 +113,7 @@ public class JsonReader {
         int x = j.getInt("posX");
         int y = j.getInt("posY");
         char id = (char) j.getInt("identifier");
-        Piece p = pieceCreator(pieceColor,x,y,id);
+        Piece p = pieceCreator(pieceColor, x, y, id);
         return p;
     }
 
@@ -119,22 +122,22 @@ public class JsonReader {
         Piece p;
         switch (id) {
             case 'K':
-                p = new King(pieceColor,x,y);
+                p = new King(pieceColor, x, y);
                 return p;
             case 'Q':
-                p = new Queen(pieceColor,x,y);
+                p = new Queen(pieceColor, x, y);
                 return p;
             case 'N':
-                p = new Knight(pieceColor,x,y);
+                p = new Knight(pieceColor, x, y);
                 return p;
             case 'B':
-                p = new Bishop(pieceColor,x,y);
+                p = new Bishop(pieceColor, x, y);
                 return p;
             case 'R':
-                p = new Rook(pieceColor,x,y);
+                p = new Rook(pieceColor, x, y);
                 return p;
             default:
-                p = new Pawn(pieceColor,x,y);
+                p = new Pawn(pieceColor, x, y);
                 return p;
         }
     }

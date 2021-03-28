@@ -9,18 +9,18 @@ public class Bishop extends Piece {
 
     //EFFECTS: Constructs a new Bishop
     public Bishop(boolean pieceColor, int posX, int posY, Board bd) {
-        super(pieceColor,posX,posY,bd,IDENTIFIER);
+        super(pieceColor, posX, posY, bd, IDENTIFIER);
     }
 
     //EFFECTS: Constructs a new Bishop
     public Bishop(boolean pieceColor, int posX, int posY) {
-        super(pieceColor,posX,posY,IDENTIFIER);
+        super(pieceColor, posX, posY, IDENTIFIER);
     }
 
 
     //EFFECTS: Chooses how in which direction to move bishop
     @Override
     public boolean makeMove(int destX, int destY) {
-        return moveDiagonally(destX,destY);
+        return moveDiagonally(destX, destY);
     }
 }
