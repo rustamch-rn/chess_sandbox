@@ -21,4 +21,5 @@
 
 <h3>Phase 4: Task 2</h2>
 <p> I have created a type hierarchy other than writeable. I have an abstract class which all other pieces extend.
-Every piece provides a unique implementation for makeMove method in piece class.</p>
+Every piece provides a unique implementation for makeMove method in piece class. Also, I have implemented a bidirectional
+relationship between piece and board, where every piece has a board and every board has at least 1 to 32 pieces.</p>
