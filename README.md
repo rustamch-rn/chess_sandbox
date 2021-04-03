@@ -23,3 +23,10 @@
 <p> I have created a type hierarchy other than writeable. I have an abstract class which all other pieces extend.
 Every piece provides a unique implementation for makeMove method in piece class. Also, I have implemented a bidirectional
 relationship between piece and board, where every piece has a board and every board has at least 1 to 32 pieces.</p>
+
+<h3>Phase 4: Task 3 </h3>
+<p> If I had more time to work on this project I would try to refactor methods that check for pieces in the way.
+All this methods have almost identical implementation, however, it was really to hard to abstract movement direction. 
+If I had more time to work on this project this would be a first thing I would have change. Also there is unnecessary 
+coupling between player and game, in future, I may try removing on of this classes or changing implementation of move 
+method inside player.</p>
