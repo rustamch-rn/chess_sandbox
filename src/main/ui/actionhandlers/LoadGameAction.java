@@ -83,6 +83,7 @@ public class LoadGameAction implements ActionListener {
     private class LoadGameName implements ActionListener {
 
         private final JButton buttonPressed; //Button that has been pressed
+        private JsonReader jsonReader;
 
         // EFFECTS : Constructs new loadGameName action listener
         public LoadGameName(JButton jbutton) {
@@ -108,9 +109,8 @@ public class LoadGameAction implements ActionListener {
         // EFFECTS: Loads a game with a given name
         private Game loadGame(String command) throws IOException {
             String dir = JSON_DIRECTORY + command + ".json";
-            Game g;
-            JsonReader jsonReader = new JsonReader(dir);
-            g = jsonReader.read();
+            jsonReader = new JsonReader(dir);
+            Game g = jsonReader.read();
             return g;
         }
     }
