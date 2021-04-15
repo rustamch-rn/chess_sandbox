@@ -23,23 +23,22 @@ public class LoadGameAction implements ActionListener {
 
     private final JFrame parentFrame; // Main window frame
     private JDialog frame; // Frame that contains all the games that user
-    private JPanel contentPanel; // Panel with all the screen contests
+    private JScrollPane contentPanel; // Panel with all the screen contests
 
     // EFFECTS : Constructs a new load game action listener
     public LoadGameAction(JFrame parentFrame, List<String> gameNames) {
         this.parentFrame = parentFrame;
         LoadGameAction.gameNames = gameNames;
-        contentPanel = new JPanel();
     }
 
     // MODIFIES : This
     // EFFECTS : On activation creates a new JDialog which displays all the save files
     @Override
     public void actionPerformed(ActionEvent e) {
-        displayLoadGameScreen();
         JPanel buttonPanel = createSaveFilePanel();
-        frame.add(contentPanel, BorderLayout.NORTH);
-        frame.add(new JScrollPane(buttonPanel), BorderLayout.CENTER);
+        contentPanel = new  JScrollPane(buttonPanel);
+        contentPanel.createVerticalScrollBar();
+        displayLoadGameScreen();
     }
 
 
@@ -47,12 +46,12 @@ public class LoadGameAction implements ActionListener {
     // EFFECTS : Constructs a panel with buttons that have names of already existing games
     private JPanel createSaveFilePanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(gameNames.size(), 1));
+        buttonPanel.setLayout(new GridLayout(gameNames.size(),1));
         for (String str : gameNames) {
             JButton jbutton = new JButton(str);
-            jbutton.setSize(new Dimension(frame.getWidth(), 100));
+            jbutton.setPreferredSize(new Dimension(buttonPanel.getWidth(), 100));
             jbutton.addActionListener(new LoadGameName(jbutton));
-            buttonPanel.add(jbutton);
+            buttonPanel.add(jbutton,Component.CENTER_ALIGNMENT);
         }
         return buttonPanel;
     }
@@ -69,8 +68,8 @@ public class LoadGameAction implements ActionListener {
                 parentFrame.setEnabled(true);
             }
         });
-        frame.setMinimumSize(new Dimension(500, 500));
-        frame.add(contentPanel, BorderLayout.CENTER);
+        frame.setPreferredSize(new Dimension(500, 500));
+        frame.add(contentPanel);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setVisible(true);

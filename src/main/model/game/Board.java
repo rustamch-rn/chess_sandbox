@@ -255,13 +255,16 @@ public class Board implements Writable {
     public void placePieceOnNewSquare(int origX, int origY, int destX, int destY) {
         Piece destSquare = tiles[destY][destX];
         Piece selectedPiece = tiles[origY][origX];
-        if (destSquare != null) {
+        if (destSquare == null) {
+            selectedPiece.setPosX(destX);
+            selectedPiece.setPosY(destY);
+            tiles[destY][destX] = selectedPiece;
+        } else if (destSquare.getPieceColor() != selectedPiece.getPieceColor()) {
             takePiece(destX, destY);
+            selectedPiece.setPosX(destX);
+            selectedPiece.setPosY(destY);
+            tiles[destY][destX] = selectedPiece;
         }
-        selectedPiece.setPosX(destX);
-        selectedPiece.setPosY(destY);
-        tiles[destY][destX] = selectedPiece;
-
     }
 
 
