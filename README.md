@@ -1,4 +1,4 @@
-<h1>Chess</h1>
+<h1>Chess Sandbox</h1>
 <ol>
 <li><h4>What will the application do?</h4>
 <p>Chess is a game that has existed for centuries and recently has gained a lot of popularity. In my opinion, chess is the ultimate game that can elicit a range of emotions in its player: from desperation when you realize that you made a one-move blunder to great joy when you see a pattern that your opponent cannot escape and which will allow you to win the game. With this project, I will try to recreate chess with all its intricate rules, and after that, I will try to implement some features that will make chess more visually pleasing.</p></li>
